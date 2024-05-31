@@ -1,19 +1,22 @@
 import { Link } from "react-router-dom";
 import NavItem from "./NavItem";
-
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import useAuth from "../../../hooks/useAuth";
+import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import logo from '../../../assets/images/logo/logo.png'
 const Navbars = () => {
+  const {user}= useAuth()
   return (
     <Navbar className="bg-[#005A55]" fluid rounded>
       <Navbar.Brand href="">
-        fdadd
+      
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
          <img className="w-52"  src={logo} alt="" />
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2">
-        <Dropdown
+        {
+          user?<>
+          <Dropdown
           arrowIcon={false}
           inline
           label={
@@ -30,6 +33,11 @@ const Navbars = () => {
           <Dropdown.Item className=" font-poppins font-bold">Dashboard</Dropdown.Item>
           <Dropdown.Item className="font-medium font-poppins">Sign out</Dropdown.Item>
         </Dropdown>
+          </>:<>
+          <button></button>
+          <Button className="text-xl font-poppins font-semibold" color="warning"><Link to='/login'>Sign in</Link></Button>
+          </>
+        }
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>

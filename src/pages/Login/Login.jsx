@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-
+import login from  '../../assets/images/banner/login (2).png'
 import banner from "../../assets/images/banner/banner-1.png";
 import useAuth from "../../hooks/useAuth";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -23,10 +23,10 @@ const Login = () => {
       <Helmet>
         <title>Login|Assignment</title>
       </Helmet>
-      <div className=" min-h-screen " style={{backgroundImage: `url(${banner})`}}>
+      <div className=" min-h-screen max-w-[1300px] mx-auto " style={{backgroundImage: `url(${banner})`}}>
         <div className="hero-content flex-col lg:flex-row-reverse ">
           <div className="text-center w-1/2 lg:text-left">
-            <img src='' alt="" />
+            <img src={login} alt="" />
           </div>
           <div className="card shrink-0 w-full max-w-xl   p-10">
             {/* form control  */}
