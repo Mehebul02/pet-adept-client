@@ -7,7 +7,7 @@ const Navbars = () => {
   return (
     <Navbar className="bg-[#005A55]" fluid rounded>
       <Navbar.Brand href="">
-        
+        fdadd
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
          <img className="w-52"  src={logo} alt="" />
         </span>
