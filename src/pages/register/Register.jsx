@@ -2,44 +2,100 @@ import { Helmet } from "react-helmet-async";
 import RegisterForm from "./RegisterForm";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
-
+import { imageUpload } from "../../utility/index";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 
 const Register = () => {
-    const { user,loading } = useAuth();
-    const [imagePreview ,setImagePreview] =useState()
-    const [imageText ,setImageText] =useState('Upload image')
-  const handleRegister = (e) => {
+  const { user, createUser,updateUserProfile, loading,setLoading } = useAuth();
+  const [imagePreview, setImagePreview] = useState();
+  const [imageText, setImageText] = useState("Upload image");
+  const [error,setError] = useState()
+  const navigate = useNavigate()
+//   const {
+//     register,
+//     handleSubmit,
+//     reset,
+//     formState: { errors },
+//   } = useForm();
+//   const onSubmit = async(data) => {
+// console.log(data);
+
+// try {
+    
+//             setLoading(true)
+//             // image upload 
+            
+//           const image_url = await imageUpload(data.image);
+//         //   user register
+//         const result = await createUser(data.email,data.password)
+//         console.log(result);
+//         await updateUserProfile(data.name,image_url)
+//         navigate("/");
+//           toast.success("Registration successfully");
+    
+//         } catch (err) {
+//           console.log(err);
+//           toast.error(err.message)
+//         }
+
+//   }
+  const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const name = form.name.value 
-    const email =form.email.value
-    const password =form.password.value
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
     const image = form.image.files[0];
-    const userInfo={
-        name,
-        email,
-        password,
+    if (password.length < 6) {
+        return setError('Password should be at least 6 characters')
+      }
+      if (!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/.test(password)) {
+        return setError("First Characters uppercase and Lowercase will be ");
+      }
+    console.log(name, email, password);
+    try {
+        setLoading(true)
+        // image upload 
+      const image_url = await imageUpload(image);
+    //   user register
+    const result = await createUser(email,password)
+    console.log(result);
+    await updateUserProfile(name,image_url)
+    navigate("/");
+      toast.success("Registration successfully");
+
+    } catch (err) {
+      console.log(err);
+      toast.error(err.message)
     }
-    console.log(userInfo);
   };
-  const handleImage =image =>{
-    setImagePreview(URL.createObjectURL(image))
-    setImageText(image.name)
-  }
+  const handleImage = (image) => {
+    setImagePreview(URL.createObjectURL(image));
+    setImageText(image.name);
+  };
   return (
     <div>
-         <Helmet>
-          <title> Login - Case Study </title>
-        </Helmet>
-<RegisterForm 
-handleRegister={handleRegister}
-handleImage={handleImage}
-setImagePreview={setImagePreview}
-imagePreview={imagePreview}
-imageText={imageText}
-loading={loading}
+      <Helmet>
+        <title> Login - Case Study </title>
+      </Helmet>
+      <RegisterForm
+        // onSubmit={onSubmit}
+        // handleSubmit={handleSubmit}
+        // errors={errors}
+        // reset={reset}
+        // register={register}
+        handleRegister={handleRegister}
+        error={error}
+        handleImage={handleImage}
+        setImagePreview={setImagePreview}
+        imagePreview={imagePreview}
+        imageText={imageText}
+        loading={loading}
+        
 
-/>
+      />
     </div>
   );
 };

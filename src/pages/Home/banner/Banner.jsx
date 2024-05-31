@@ -6,7 +6,7 @@ import pet4 from "../../../assets/images/banner/pet4.jpg";
 import pet5 from "../../../assets/images/banner//pet5.jpg";
 const Banners = () => {
   return (
-    <section className="bg-[#F5EDE0] ">
+    <section className=" dark:bg-[#F5EDE0]  ">
       <div className=" flex flex-col  p-6 mx-auto sm:py-12 lg:py-24 lg:flex-row lg:justify-between ">
         <div className="flex flex-col justify-center p-6 text-center rounded-sm   lg:text-left">
           <h1 className=" text-2xl lg:text-7xl font-serif font-semibold leading-none sm:text-5xl p-2">

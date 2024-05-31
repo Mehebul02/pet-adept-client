@@ -7,7 +7,7 @@ import register from "../../assets/images/banner/register.png";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import useAuth from "../../hooks/useAuth";
 
-const RegisterForm = ({handleRegister,handleImage,setImagePreview,imagePreview,imageText,loading}) => {
+const RegisterForm = ({handleRegister,error,handleImage,setImagePreview,imagePreview,imageText,loading}) => {
     const [showPassword, setShowPassword] = useState(false);
   
   
@@ -82,8 +82,9 @@ const RegisterForm = ({handleRegister,handleImage,setImagePreview,imagePreview,i
                   <FaEye className="text-xl"></FaEye>
                 )}
               </span>
+              <p className="text-red-600">{error}</p>
             </label>
-            <div className=' p-4 bg-white w-full  m-auto rounded-lg flex gap-6 items-center'>
+            <div className=' p-4 dark:bg-white w-full  m-auto rounded-lg flex gap-6 items-center'>
                 <div className='file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg'>
                   <div className='flex flex-col  '>
                     <label>
@@ -107,7 +108,7 @@ const RegisterForm = ({handleRegister,handleImage,setImagePreview,imagePreview,i
                 {imagePreview && <img className='rounded-lg border-2 border-[#f43f5e]' src={imagePreview}></img>}
                 </div>
               </div>
-            <button className="bg-[#f69b03] px-3 py-2 rounded-lg text-xl font-serif text-white font-semibold mt-4">
+            <button className="bg-[#f69b03]   px-8 py-2 rounded-lg text-xl font-serif text-white font-semibold mt-4">
               {loading ? (
                 <AiOutlineLoading3Quarters className="text-center font-semibold text-xl animate-spin mx-auto" />
               ) : (
