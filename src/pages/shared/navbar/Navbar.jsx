@@ -51,8 +51,7 @@ const Navbars = () => {
       <Navbar.Collapse>
         <NavItem label="Home" address="/"></NavItem>
         <NavItem label=" Pet Listing" address="/petListing"></NavItem>
-        <NavItem label=" Donation" address="/donation"></NavItem>
-        <NavItem label="Campaigns" address="/campaigns"></NavItem>
+        <NavItem label=" Donation Campaigns" address="/donation"></NavItem>
       </Navbar.Collapse>
     </Navbar>
   );

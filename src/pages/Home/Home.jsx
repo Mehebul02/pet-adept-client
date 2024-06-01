@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import Categories from "../../components/category/Categories";
 import useAuth from "../../hooks/useAuth";
 import Pets from "./Petscategory/Pets";
@@ -9,6 +10,9 @@ const Home = () => {
  
     return (
         <div>
+            <Helmet>
+                <title>Paws Nest-Home</title>
+            </Helmet>
           <Banners/>
          <PetsCategory/>
          {/* pet collection  */}

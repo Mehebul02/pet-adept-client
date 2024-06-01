@@ -1,7 +1,9 @@
 // import { FaDonate, FaTimes } from 'react-icons/fa';
+import { Helmet } from 'react-helmet-async';
 import img from '../../assets/images/banner/pet3.jpg'
 import usePets from '../../hooks/usePets';
 import Container from '../shared/Container';
+import LoadingSpinner from '../shared/loadingSpinner/LoadingSpinner';
 import PetCard from './PetCard';
 // import { Dropdown } from 'flowbite-react';
 // import { useState } from 'react';
@@ -14,10 +16,14 @@ const PetListing = () => {
     // const filteredPets = selectedCategory === 'All' 
     // ? pets 
     // : pets.filter(pet => pet.category === selectedCategory);
-const [pets] = usePets()
+const [pets,isLoading] = usePets()
+
    
     return (
       <Container>
+        <Helmet>
+          <title>Paws Nest-Pet Listing</title>
+        </Helmet>
          <div className='my-4 '>
        <div className='flex items-center p-10 gap-10'>
       <div className='flex'>
@@ -41,7 +47,7 @@ const [pets] = usePets()
        </div>
       <div className='grid grid-cols-1 md:grid-cols-3'>
            {
-            pets.map(pet =><PetCard key={pet._id} pet={pet}></PetCard>)
+            pets.map(pet =><PetCard key={pet._id} pet={pet} isLoading={isLoading}></PetCard>)
            }
      
          </div> 
