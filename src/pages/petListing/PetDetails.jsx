@@ -7,6 +7,11 @@ import useAuth from "../../hooks/useAuth";
 import { MdDateRange } from "react-icons/md";
 import { VscChromeClose } from "react-icons/vsc";
 import { CiLocationOn } from "react-icons/ci";
+import { useLoaderData, useParams } from "react-router-dom";
+import useAxiosCommon from "../../hooks/useAxiosCommon";
+import { useQuery } from "@tanstack/react-query";
+import LoadingSpinner from "../shared/loadingSpinner/LoadingSpinner";
+import Skeleton from "../../components/skeleton/Skeleton";
 // import useAxiosCommon from "../../hooks/useAxiosCommon";
 // import { useQuery } from "@tanstack/react-query";
 // import { useLoaderData, useParams } from "react-router-dom";
@@ -15,18 +20,20 @@ import { CiLocationOn } from "react-icons/ci";
 const PetDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [petDetails, setPetDetails] = useState({});
-  // const axiosSecure = useAxiosSecure();
+  const axiosCommon = useAxiosCommon();
   const { user } = useAuth();
-  // const pet = useLoaderData();
-  // console.log(pet);
-  // const {id} = useParams()
-  // const { data: pet = {} } = useQuery({
-  //   queryKey: ["pet", id],
-  //   queryFn: async () => {
-  //     const { data } = await axiosSecure.get(`/pet/${id}`);
-  //     return data;
-  //   },
-  // });
+//  tan stack query single data
+  const { id } = useParams();
+  const { data: pet = {},isLoading } = useQuery({
+    queryKey: ["pet", id],
+    queryFn: async () => {
+      const { data } = await axiosCommon.get(`/pet/${id}`);
+      return data;
+    },
+  });
+  // if(isLoading){
+  //   return <LoadingSpinner/>
+  // }
   const openAdoptModal = (petId, petName, petImage) => {
     setPetDetails({ petId, petName, petImage });
     setIsModalOpen(true);
@@ -48,143 +55,137 @@ const PetDetails = () => {
         <Helmet>
           <title>Paws Nets-PetDetails</title>
         </Helmet>
-       
-          <div className="w-[700px] mx-auto ">
-            <div className=" border rounded border-gray-300 p-5 m-5 ">
-              <img
-                src={image}
-                alt="Pet"
-                className="w-[600px] h-[300px]  object-cover rounded mx-auto"
-              />
-              <div className="flex justify-between px-6 mt-3">
-                <div className="font-semibold font-poppins text-xl  mb-2">
-                  {/* {pet.name} */}
-                  Name
-                </div>
-                <p className="text-gray-700 font-poppins font-medium text-base flex items-center gap-2">
-                  {" "}
-                  <span>
-                    <MdDateRange />
-                  </span>
-                  {/* {pet.age} */}
-                  age
-                </p>
-              </div>
 
-              <p className="px-6 flex items-center gap-3 font-medium text-gray-700  font-poppins">
-                <span className="text-red-700">
-                  <CiLocationOn />{" "}
+        <div className="w-[700px] mx-auto ">
+          {isLoading?<Skeleton/>:
+<div className=" border rounded border-gray-300 p-5 m-5 ">
+            <img
+              src={pet.image}
+              alt="Pet"
+              className="w-[600px] h-[300px]  object-cover rounded mx-auto"
+            />
+            <div className="flex justify-between px-6 mt-3">
+              <div className="font-semibold font-poppins text-xl  mb-2">
+                {pet.name}
+                
+              </div>
+              <p className="text-gray-700 font-poppins font-medium text-base flex items-center gap-2">
+                {" "}
+                <span>
+                  <MdDateRange />
                 </span>
-                {/* {pet.location} */}
-                location
+                {pet.age}
+                
               </p>
-
-              <div className="text-center">
-                <button
-                  className="mt-3 text-center px-4 py-2 bg-green-500 text-white rounded"
-                  onClick={() =>
-                    openAdoptModal("1", "Pet Name", "pet-image.jpg")
-                  }
-                >
-                  Adopt
-                </button>
-              </div>
             </div>
 
-            {isModalOpen && (
-              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                <div className="bg-white p-8 rounded shadow-lg relative w-full max-w-lg">
-                  <button
-                    className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
-                    onClick={closeAdoptModal}
-                  >
-                    <VscChromeClose className="text-3xl text-black" />{" "}
-                  </button>
-                  <h2 className="text-2xl mb-4">{petDetails.petName}</h2>
-                  <form onSubmit={handleSubmit} className="space-y-4">
+            <p className="px-6 flex items-center gap-3 font-medium text-gray-700  font-poppins">
+              <span className="text-red-700">
+                <CiLocationOn />{" "}
+              </span>
+              {pet.location}
+              
+            </p>
+
+            <div className="text-center">
+              <button
+                className="mt-3 text-center px-4 py-2 bg-green-500 text-white rounded"
+                onClick={() => openAdoptModal("1", "Pet Name", "pet-image.jpg")}
+              >
+                Adopt
+              </button>
+            </div>
+          </div>}
+
+          {isModalOpen && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+              <div className="bg-white p-8 rounded shadow-lg relative w-full max-w-lg">
+                <button
+                  className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+                  onClick={closeAdoptModal}
+                >
+                  <VscChromeClose className="text-3xl text-black" />{" "}
+                </button>
+                <h2 className="text-2xl mb-4">{petDetails.petName}</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <input type="hidden" name="petId" value={petDetails.petId} />
+                  <input
+                    type="hidden"
+                    name="petName"
+                    value={petDetails.petName}
+                  />
+                  <input
+                    type="hidden"
+                    name="petImage"
+                    value={petDetails.petImage}
+                  />
+                  <div>
+                    <label htmlFor="userName" className="block text-gray-700">
+                      User Name
+                    </label>
                     <input
-                      type="hidden"
-                      name="petId"
-                      value={petDetails.petId}
+                      type="text"
+                      id="userName"
+                      name="userName"
+                      value={user?.displayName}
+                      disabled
+                      className="w-full p-2 border border-gray-300 rounded"
                     />
-                    <input
-                      type="hidden"
-                      name="petName"
-                      value={petDetails.petName}
-                    />
-                    <input
-                      type="hidden"
-                      name="petImage"
-                      value={petDetails.petImage}
-                    />
-                    <div>
-                      <label htmlFor="userName" className="block text-gray-700">
-                        User Name
-                      </label>
-                      <input
-                        type="text"
-                        id="userName"
-                        name="userName"
-                        value={user?.displayName}
-                        disabled
-                        className="w-full p-2 border border-gray-300 rounded"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="email"
-                        className="block text-xl  text-gray-700"
-                      >
-                        Email:
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        value={user?.email}
-                        disabled
-                        className="w-full p-2 border border-gray-300 rounded"
-                      />
-                    </div>
-                    <div>
-                      <label
-                        htmlFor="phoneNumber"
-                        className="block text-gray-700"
-                      >
-                        Phone Number:
-                      </label>
-                      <input
-                        type="text"
-                        id="phoneNumber"
-                        name="phoneNumber"
-                        required
-                        className="w-full p-2 border border-gray-300 rounded"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="address" className="block text-gray-700">
-                        Address:
-                      </label>
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        required
-                        className="w-full p-2 border border-gray-300 rounded"
-                      />
-                    </div>
-                    <button
-                      type="submit"
-                      className="w-full text-xl font-poppins bg-[#F69B03] text-white p-2 rounded"
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-xl  text-gray-700"
                     >
-                      Submit
-                    </button>
-                  </form>
-                </div>
+                      Email:
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={user?.email}
+                      disabled
+                      className="w-full p-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="phoneNumber"
+                      className="block text-gray-700"
+                    >
+                      Phone Number:
+                    </label>
+                    <input
+                      type="text"
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      required
+                      className="w-full p-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="address" className="block text-gray-700">
+                      Address:
+                    </label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      required
+                      className="w-full p-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full text-xl font-poppins bg-[#F69B03] text-white p-2 rounded"
+                  >
+                    Submit
+                  </button>
+                </form>
               </div>
-            )}
-          </div>
-       
+            </div>
+          )}
+        </div>
       </div>
     </Container>
   );

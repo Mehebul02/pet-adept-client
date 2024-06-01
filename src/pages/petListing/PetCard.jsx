@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import LoadingSpinner from "../shared/loadingSpinner/LoadingSpinner";
+import Skeleton from "../../components/skeleton/Skeleton";
 
 const PetCard = ({pet,isLoading}) => {
     const {_id,name,image,location,age}=pet
-    if(isLoading){
-        return <LoadingSpinner/>
-      }
+    
     return (
         <div>
             <div className="max-w-sm border p-4 rounded-xl overflow-hidden shadow-lg m-4">

@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosCommon from "../../../hooks/useAxiosCommon";
 import LoadingSpinner from "../../shared/loadingSpinner/LoadingSpinner";
 import { useSearchParams } from "react-router-dom";
+import Skeleton from "../../../components/skeleton/Skeleton";
 
 const Pets = () => {
   const axiosCommon = useAxiosCommon();
@@ -18,9 +19,9 @@ const Pets = () => {
       return data;
     },
   });
-// if(isLoading){
-//     return <LoadingSpinner/>
-// }
+if(isLoading){
+  return <Skeleton/>
+}
   return (
     <Container>
       {pets && pets.length > 0 ? (
@@ -30,12 +31,17 @@ const Pets = () => {
           ))}
         </div>
       ) : (
-        <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
+        isLoading?<div className="flex justify-center items-center">
+          <Skeleton/>
+          <Skeleton/>
+          <Skeleton/>
+        </div>: <div className="flex items-center justify-center min-h-[calc(100vh-300px)]">
           <div>
             <h1 className="text-2xl font-poppins font-medium">No Pets Available In This Category!</h1>
             <h1 className="text-xl font-poppins">Please Select Other Categories.</h1>
           </div>
         </div>
+          
       )}
     </Container>
   );

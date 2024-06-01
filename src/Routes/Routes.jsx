@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       {
         path:'/details/:id',
         element:<PetDetails/>,
-        loader:({params})=>fetch(`import.meta.env.VITE_API_URL/pet/${params.id}`)
+        // loader:({params})=>fetch(`import.meta.env.VITE_API_URL/pet/${params.id}`)
       },
       {
         path: "/login",
