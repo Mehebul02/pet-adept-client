@@ -4,17 +4,20 @@ import useAuth from "../../../hooks/useAuth";
 import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import logo from '../../../assets/images/logo/logo.png'
 import ToggleButton from "../../ToggleButton/ToggleButton";
+import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 const Navbars = () => {
   const {user,logOut,loading}= useAuth()
-  if(loading){
-    return <p>Loading..</p>
-  }
+  // if(loading){
+  //   return <LoadingSpinner/>
+  // }
   return (
     <Navbar className="bg-[#005A55] " fluid rounded>
       <Navbar.Brand href="">
       
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
+         <Link to='/'>
          <img className="w-52"  src={logo} alt="" />
+         </Link>
         </span>
       </Navbar.Brand>
       <div className="flex md:order-2 space-x-3">

@@ -1,5 +1,6 @@
 // import { FaDonate, FaTimes } from 'react-icons/fa';
 import img from '../../assets/images/banner/pet3.jpg'
+import Container from '../shared/Container';
 // import { Dropdown } from 'flowbite-react';
 // import { useState } from 'react';
 
@@ -14,7 +15,8 @@ const PetListing = () => {
 
    
     return (
-       <div className='my-4 '>
+      <Container>
+         <div className='my-4 '>
        <div className='flex items-center p-10 gap-10'>
       <div className='flex'>
       <input type="text" placeholder="Search pets" className="input input-bordered w-full max-w-xs" />
@@ -80,6 +82,7 @@ const PetListing = () => {
          </div> 
         
        </div>
+      </Container>
     );
 };
 

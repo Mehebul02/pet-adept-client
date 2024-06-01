@@ -11,6 +11,7 @@ import {
 import PropTypes from "prop-types";
 import { createContext, useEffect, useState } from "react";
 import auth from "../firebase/firebase_config";
+import useAxiosCommon from "../hooks/useAxiosCommon";
 export const AuthContext = createContext(null);
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
@@ -18,6 +19,7 @@ const githubProvider = new GithubAuthProvider();
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const axiosCommon = useAxiosCommon()
   //   user create
   const createUser = (email, password) => {
     setLoading(true);
@@ -55,7 +57,23 @@ const AuthProviders = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log("Current user", currentUser);
       setUser(currentUser);
-      setLoading(false);
+      if(currentUser){
+        const userInfo ={email:currentUser.email}
+        // get to token client 
+        axiosCommon.post(`/jwt`,userInfo)
+        .then(res =>{
+          if(res.data.token){
+            localStorage.setItem('access-token',res.data.token)
+            setLoading(false);
+          }
+        })
+      }
+      else{
+        // TODO:remove token 
+        localStorage.removeItem('access-token')
+        setLoading(false);
+      }
+      
     });
     return () => {
       unsubscribe();

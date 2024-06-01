@@ -9,7 +9,9 @@ const Roots = () => {
       <div className=" min-h-[calc(100vh-68px)]">
         <Outlet />
       </div>
-      <Footer />
+    <div className="">
+    <Footer />
+    </div>
     </div>
   );
 };

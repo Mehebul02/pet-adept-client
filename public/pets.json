@@ -1,0 +1,47 @@
+[
+    { "_id": "664717d3e6931ab2b2a35655",
+      "name": "Buddy",
+      "image": "https://ibb.co/3sZpb8b",
+      "category": "Dogs",
+      "location": "New York, NY",
+      "age": "3 years"
+    },
+    {
+      "_id": "664717d3e6931ab2b2a3563",
+      "name": "Mittens",
+      "image":"https://ibb.co/8c9gXWY",
+      "category": "Cats",
+      "location": "San Francisco, CA",
+      "age": "2 years"
+    },
+    { "_id": "664717d3e6931ab2b2a35657",
+      "name": "Rex",
+      "image": "https://ibb.co/3sZpb8b",
+      "category": "Dogs",
+      "location": "Austin, TX",
+      "age": "5 years"
+    },
+    {
+      "_id": "664717d3e6931ab2b2a35659",
+      "name": "Tweety",
+      "image": "https://ibb.co/RjdvMPW",
+      "category": "Birds",
+      "location": "Los Angeles, CA",
+      "age": "1 year"
+    },
+    { "_id": "664717d3e6931ab2b2a35656",
+      "name": "Snowball",
+      "image": "https://ibb.co/4Rv7Wr9",
+      "category": "Rabbits",
+      "location": "Chicago, IL",
+      "age": "1 year"
+    },
+    { "_id": "664717d3e6931ab2b2a356560",
+      "name": "Goldie",
+      "image": "https://ibb.co/kXp1mGC",
+      "category": "Fish",
+      "location": "Miami, FL",
+      "age": "2 years"
+    }
+  ]
+  
