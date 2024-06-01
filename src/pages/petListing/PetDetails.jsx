@@ -1,23 +1,17 @@
-import { Card } from "flowbite-react";
+
 import { Helmet } from "react-helmet-async";
 import Container from "../shared/Container";
-import image from "../../assets/images/banner/pet3.jpg";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { MdDateRange } from "react-icons/md";
 import { VscChromeClose } from "react-icons/vsc";
 import { CiLocationOn } from "react-icons/ci";
-import { useLoaderData, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
 import { useQuery } from "@tanstack/react-query";
-import LoadingSpinner from "../shared/loadingSpinner/LoadingSpinner";
 import Skeleton from "../../components/skeleton/Skeleton";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import toast from "react-hot-toast";
-// import useAxiosCommon from "../../hooks/useAxiosCommon";
-// import { useQuery } from "@tanstack/react-query";
-// import { useLoaderData, useParams } from "react-router-dom";
-// import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const PetDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,6 +19,7 @@ const PetDetails = () => {
   const axiosCommon = useAxiosCommon();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
+  const navigate = useNavigate()
   //  tan stack query single data
   const { id } = useParams();
   const { data: pet = {}, isLoading } = useQuery({
@@ -57,6 +52,7 @@ const PetDetails = () => {
       if(data.insertedId){
 
         toast.success('Adopt submit successfully')
+        navigate('/petListing')
       }
       // console.log(data);
     } catch (err) {
@@ -106,7 +102,7 @@ const PetDetails = () => {
 
               <div className="text-center">
                 <button
-                  className="mt-3 text-center px-4 py-2 bg-green-500 text-white rounded"
+                  className="mt-3 text-center text-xl font-poppins font-semibold px-4 py-2 bg-green-500 text-white rounded"
                   onClick={() => openAdoptModal(pet._id, pet.name, pet.image)}
                 >
                   Adopt
