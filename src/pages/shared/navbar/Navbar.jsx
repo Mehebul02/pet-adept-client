@@ -7,9 +7,9 @@ import ToggleButton from "../../ToggleButton/ToggleButton";
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
 const Navbars = () => {
   const {user,logOut,loading}= useAuth()
-  // if(loading){
-  //   return <LoadingSpinner/>
-  // }
+  if(loading){
+    return <LoadingSpinner/>
+  }
   return (
     <Navbar className="bg-[#005A55] " fluid rounded>
       <Navbar.Brand href="">

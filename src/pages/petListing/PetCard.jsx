@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types'
-const Card = ({pet}) => {
-    console.log(pet);
+
+const PetCard = ({pet}) => {
     const {name,image,location,age}=pet
-    // console.log(image);
     return (
-        <div className="max-w-sm border p-4 rounded-xl overflow-hidden shadow-lg m-4">
-        <img className="w-full h-48 object-cover mx-auto rounded-lg" src={image} alt='' />
-        {/* <img cl src={image} alt="" /> */}
+        <div>
+            <div className="max-w-sm border p-4 rounded-xl overflow-hidden shadow-lg m-4">
+        <img className="w-full h-48 object-cover rounded-lg" src={image} alt='' />
         <div className="flex justify-between px-6 mt-3">
           <div className="font-semibold font-poppins text-xl  mb-2">{name}</div>
           <p className="text-gray-700 font-poppins font-medium text-base"> Age: {age}</p>
@@ -17,11 +15,9 @@ const Card = ({pet}) => {
             View Details
           </button>
         </div>
-      </div>
+      </div> 
+        </div>
     );
 };
-Card.propTypes = {
-    room: PropTypes.object,
-  }
-  
-export default Card;
+
+export default PetCard;

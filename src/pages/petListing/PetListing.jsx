@@ -1,6 +1,8 @@
 // import { FaDonate, FaTimes } from 'react-icons/fa';
 import img from '../../assets/images/banner/pet3.jpg'
+import usePets from '../../hooks/usePets';
 import Container from '../shared/Container';
+import PetCard from './PetCard';
 // import { Dropdown } from 'flowbite-react';
 // import { useState } from 'react';
 
@@ -12,7 +14,7 @@ const PetListing = () => {
     // const filteredPets = selectedCategory === 'All' 
     // ? pets 
     // : pets.filter(pet => pet.category === selectedCategory);
-
+const [pets] = usePets()
    
     return (
       <Container>
@@ -38,47 +40,10 @@ const PetListing = () => {
        </div>
        </div>
       <div className='grid grid-cols-1 md:grid-cols-3'>
-            <div className="max-w-sm border p-4 rounded-xl overflow-hidden shadow-lg m-4">
-        <img className="w-72 mx-auto rounded-lg" src={img} alt='' />
-        <div className="flex justify-between px-6 mt-3">
-          <div className="font-semibold font-poppins text-xl  mb-2">Pet Adoption</div>
-          <p className="text-gray-700 font-poppins font-medium text-base"> Age: 12</p>
-        </div>
-          <p className="px-6  text-gray-700 text-base font-poppins"><span className='text-orange-600'>Location</span>: Kushtia</p>
-        <div className="px-6 pt-4 pb-2">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            View Details
-          </button>
-        </div>
-      </div>
-      {/* card 2 */}
-      <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
-        <img className="w-72 mx-auto rounded-lg" src={img} alt='' />
-        <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">Pet Adoption</div>
-          <p className="text-gray-700 text-base">Age: 12</p>
-          <p className="text-gray-700 text-base">Location: Kushtia</p>
-        </div>
-        <div className="px-6 pt-4 pb-2">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            View Details
-          </button>
-        </div>
-      </div>
-      {/* card 2 */}
-      <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
-        <img className="w-72 mx-auto rounded-lg" src={img} alt='' />
-        <div className="px-6 py-4">
-          <div className="font-bold text-xl mb-2">Pet Adoption</div>
-          <p className="text-gray-700 text-base">Age: 12</p>
-          <p className="text-gray-700 text-base">Location: Kushtia</p>
-        </div>
-        <div className="px-6 pt-4 pb-2">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            View Details
-          </button>
-        </div>
-      </div>
+           {
+            pets.map(pet =><PetCard key={pet._id} pet={pet}></PetCard>)
+           }
+     
          </div> 
         
        </div>
