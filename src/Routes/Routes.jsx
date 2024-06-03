@@ -7,11 +7,13 @@ import PetListing from "../pages/petListing/PetListing";
 import PetDetails from "../pages/petListing/PetDetails";
 import DonationCampaigns from "../pages/Donation_Campaigns/DonationCampaigns";
 import DonationDetails from "../pages/Donation_Campaigns/DonationDetails";
+import ErrorPage from "../pages/error_page/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Roots />,
+    errorElement:<ErrorPage/>,
     children: [
       {
         path: "/",
