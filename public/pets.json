@@ -29,9 +29,9 @@
       "location": "Los Angeles, CA",
       "age": "1 year"
     },
-    { "_id": "664717d3e6931ab2b2a35656",
+    { 
       "name": "Snowball",
-      "image": "https://ibb.co/4Rv7Wr9",
+      "image": "https://i.ibb.co/vmv1wxG/7505d72e-204d-4824-a234-81d499f9c68b-A-young-eastern-cottontail-in-the-writers-Worthington-backyard.webp",
       "category": "Rabbits",
       "location": "Chicago, IL",
       "age": "1 year"

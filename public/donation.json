@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Guard Dog",
+        "image": "https://i.ibb.co/vhZSV2r/images-7.jpg",
+        "maxDonation": 500,
+        "donatedAmount": 250
+        
+      },
+      {
+        "name": "Mittens",
+        "image": "https://i.ibb.co/vhZSV2r/images-7.jpg",
+        "maxDonation": 300,
+        "donatedAmount": 150
+      
+      },
+     
+    
+      {
+        "name": "Therapy Pet",
+        "image": "https://i.ibb.co/tQyxkzY/60df00f95b6f8878203168.jpg",
+        "maxDonation": 450,
+        "donatedAmount": 225
+       
+      }
+  ]

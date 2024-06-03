@@ -5,6 +5,8 @@ import Login from "../pages/Login/Login";
 import Register from "../pages/register/Register";
 import PetListing from "../pages/petListing/PetListing";
 import PetDetails from "../pages/petListing/PetDetails";
+import DonationCampaigns from "../pages/Donation_Campaigns/DonationCampaigns";
+import DonationDetails from "../pages/Donation_Campaigns/DonationDetails";
 
 const router = createBrowserRouter([
   {
@@ -20,9 +22,16 @@ const router = createBrowserRouter([
         element: <PetListing />,
       },
       {
-        path:'/details/:id',
-        element:<PetDetails/>,
-        // loader:({params})=>fetch(`import.meta.env.VITE_API_URL/pet/${params.id}`)
+        path: "/details/:id",
+        element: <PetDetails />,
+      },
+      {
+        path:'/donation',
+        element:<DonationCampaigns/>
+      },
+      {
+        path:'/donationDetails/:id',
+        element:<DonationDetails/>
       },
       {
         path: "/login",

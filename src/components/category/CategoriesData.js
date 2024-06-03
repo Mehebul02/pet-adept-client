@@ -10,7 +10,7 @@ export const categories = [
     description: "This property is close to the Cats!",
   },
   {
-    label: "Rabbit",
+    label: "Rabbits",
     icon: GiRabbitHead,
     description: "This property is has Rabbit!",
   },
@@ -28,6 +28,6 @@ export const categories = [
   {
     label: "Birds",
     icon: FaEarlybirds,
-    description: "This property is has Fish!",
+    description: "This property is has Birds!",
   },
 ];
