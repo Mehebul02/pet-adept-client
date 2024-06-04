@@ -1,28 +1,97 @@
 import { useState } from "react";
 import Container from "../../shared/Container";
 import { useForm } from "react-hook-form";
-import Select from 'react-select';
-// pets category 
-const options = [
-    { value: 'cats', label: 'Cats' },
-    { value: 'rabbits', label: 'Rabbits' },
-    { value: 'dogs', label: 'Dogs' },
-    { value: 'fish', label: 'Fish' },
-    { value: 'birds', label: 'Birds' },
-  ];
+import Select from "react-select";
+import useAuth from "../../../hooks/useAuth";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import useAxiosCommon from "../../../hooks/useAxiosCommon";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import { imageUpload } from "../../../utility";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
+// pets category
+const options = [
+  { value: "cats", label: "Cats" },
+  { value: "rabbits", label: "Rabbits" },
+  { value: "dogs", label: "Dogs" },
+  { value: "fish", label: "Fish" },
+  { value: "birds", label: "Birds" },
+];
+const image_hosting_key = import.meta.env.VITE_IMAGE_API_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddPets = () => {
   const [imagePreview, setImagePreview] = useState();
   const [imageText, setImageText] = useState("Upload image");
-
-  const { register, handleSubmit } = useForm();
-  const onSubmit = (data) => console.log(data);
   const [selectedOption, setSelectedOption] = useState(null);
-  //   handle img
+  const axiosCommon = useAxiosCommon();
+  const axiosSecure = useAxiosSecure();
+  const { loading } = useAuth();
+  const { register, handleSubmit, reset } = useForm();
+const navigate=useNavigate()
   const handleImage = (image) => {
     setImagePreview(URL.createObjectURL(image));
     setImageText(image.name);
   };
+  const handleSubmitPets =async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const image = form.image.files[0];
+    const name = form.name.value;
+    const age = form.age.value;
+    const location = form.location.value;
+    const category = form.category.value 
+    const shortDescription = form.shortDescription.value 
+    const longDescription = form.longDescription.value 
+   
+   
+    try {
+         const image_url = await imageUpload(image)
+        const petsItem={
+            image:image_url,
+            name,age,location,category,shortDescription,longDescription
+        }
+        console.log(petsItem);
+        const { data } = await axiosSecure.post(`/pets`,petsItem);
+        console.log(data);
+  
+        toast.success("Create Assignment Successfully");
+        form.reset();
+        navigate('/dashboard/my-added')
+      } catch (err) {
+        console.log(err);
+      }
+  
+  };
+  //   const onSubmit = async(data) => {
+  //     console.log(data);
+  //     try{
+
+  //     }
+  // const imageFile = { image: data.image[0] };
+
+  // const res = await axiosCommon.post(image_hosting_api, imageFile, {
+  //   headers: {
+  //     "content-type": "multipart/form-data",
+  //   },
+  // });
+  // if (res.data.success) {
+  //     const menuItem = {
+  //       name: data.name,
+  //       category: data.category,
+  //       image: res.data.data.display_url,
+  //     };
+  //     const menuRes = await axiosSecure.post(`/pets`, menuItem);
+  //     console.log(menuRes);
+  //     if(menuRes.data.insertedId){
+  //       reset()
+  //       toast.success('Add item successfully')
+  //     }
+  //   }
+  // console.log(res);
+  //   }
+
   return (
     <Container>
       <div className="p-6 ">
@@ -31,13 +100,14 @@ const AddPets = () => {
         </h1>
         {/* pet form  */}
         <div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmitPets}>
             {/* img  */}
             <div className=" p-4 dark:bg-white w-full  mx-auto  rounded-lg flex gap-6 items-center">
               <div className="file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg">
                 <div className="flex flex-col  ">
                   <label>
                     <input
+                      // {...register('image')}
                       className="text-sm cursor-pointer w-80 hidden"
                       type="file"
                       name="image"
@@ -69,42 +139,115 @@ const AddPets = () => {
               </div>
             </div>
 
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
-            {/* pet name  */}
-           <label className="form-control w-full ">
-        <div className="label">
-       <span className="label-text text-xl font-poppins font-medium ">Name</span>
-    </div>
-  <input type="text" placeholder="Pet name" className="input input-bordered valid:border-[#005A55] w-full " />
- 
-</label>
-            {/* pet Age  */}
-           <label className="form-control w-full ">
-          <div className="label">
-    <span className="label-text text-xl font-poppins font-medium ">Age</span>
-  </div>
-  <input type="text" placeholder="Pet name" className="input input-bordered valid:border-[#005A55] w-full " />
- 
-</label>
-{/* pet category */}
-<div className="">
-<label className="form-control w-full ">
-          <div className="label">
-    <span className="label-text text-xl font-poppins font-medium ">Age</span>
-  </div>
-  <Select styles={{
-    control: (baseStyles, state) => ({
-      ...baseStyles,
-      borderColor: state.isFocused ? 'green' : 'green',
-    }),
-  }}
-        defaultValue={selectedOption}
-        onChange={setSelectedOption}
-        options={options}
-      /> 
-</label>
-</div>
-           </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
+              {/* pet name  */}
+              <label className="form-control w-full ">
+                <div className="label">
+                  <span className="label-text text-xl font-poppins font-medium ">
+                    Name
+                  </span>
+                </div>
+                <input
+                  //   {...register('name')}
+                  name="name"
+                  type="text"
+                  placeholder="Pet name"
+                  className="input input-bordered valid:border-[#005A55] w-full "
+                />
+              </label>
+              {/* pet Age  */}
+              <label className="form-control w-full ">
+                <div className="label">
+                  <span className="label-text text-xl font-poppins font-medium ">
+                    Age
+                  </span>
+                </div>
+                <input
+                //   {...register("age")}
+                  name="age"
+                  type="number"
+                  placeholder="Pet Age"
+                  className="input input-bordered valid:border-[#005A55] w-full "
+                />
+              </label>
+              {/* pet category */}
+
+              <label className="form-control w-full ">
+                <div className="label">
+                  <span className="label-text text-xl font-poppins font-medium ">
+                    Category
+                  </span>
+                </div>
+                <Select
+                  // {...register("category")}
+                  name="category"
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: state.isFocused ? "green" : "green",
+                    }),
+                  }}
+                  defaultValue={selectedOption}
+                  onChange={setSelectedOption}
+                  options={options}
+                />
+              </label>
+              {/* pet location  */}
+              <label className="form-control w-full ">
+                <div className="label">
+                  <span className="label-text text-xl font-poppins font-medium ">
+                    Pet Pickup Location
+                  </span>
+                </div>
+                <input
+                  // {...register("location")}
+                  name="location"
+                  type="text"
+                  placeholder="Enter the location where the pet can be picked up"
+                  className="input input-bordered valid:border-[#005A55] w-full "
+                />
+              </label>
+              {/* Short description,  */}
+              <label className="form-control w-full ">
+                <div className="label">
+                  <span className="label-text text-xl font-poppins font-medium ">
+                    Short Description
+                  </span>
+                </div>
+                <input
+                  // {...register("shortDescription")}
+                  name="shortDescription"
+                  type="text"
+                  placeholder="Short description"
+                  className="input input-bordered valid:border-[#005A55] w-full "
+                />
+              </label>
+              {/* long description,  */}
+              <label className="form-control w-full ">
+                <div className="label">
+                  <span className="label-text text-xl font-poppins font-medium ">
+                    Long Description
+                  </span>
+                </div>
+                <textarea
+                  // {...register("longDescription")}
+                  name="longDescription"
+                  placeholder="Long description,"
+                  rows="3"
+                  className="valid:border-[#005A55] textarea textarea-bordered textarea-lg w-full c"
+                ></textarea>
+              </label>
+            </div>
+            {/* button  */}
+            <div>
+              <button className="px-8 py-3 text-lg font-semibold rounded bg-[#F69B03] text-white font-poppins dark:bg-violet-600 dark:text-gray-50">
+                {loading ? (
+                  <AiOutlineLoading3Quarters className=" font-semibold text-xl animate-spin " />
+                ) : (
+                  "Submit"
+                )}
+              </button>
+            </div>
           </form>
         </div>
       </div>
