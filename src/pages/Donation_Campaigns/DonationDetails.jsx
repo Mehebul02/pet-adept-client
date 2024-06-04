@@ -5,8 +5,15 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Skeleton from "../../components/skeleton/Skeleton";
 import { MdDateRange } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
+import { useState } from "react";
 
 const DonationDetails = () => {
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // const handleDonateNowClick = () => {
+  //   setIsModalOpen(true);
+  // };
+
   const axiosSecure = useAxiosSecure();
   const { id } = useParams();
   const { data: donation = {}, isLoading } = useQuery({
@@ -54,6 +61,8 @@ const DonationDetails = () => {
           </button>
         </div>
       </div>
+
+      
     </Container>
   );
 };

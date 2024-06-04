@@ -14,8 +14,9 @@ import icon from '../../../assets/images/icon/donate.png'
 import { VscGitPullRequestGoToChanges } from 'react-icons/vsc'
 import { BiDonateHeart } from 'react-icons/bi'
 import { MdBorderColor, MdOutlinePets } from 'react-icons/md'
-import { FaDonate } from 'react-icons/fa'
+import { FaDonate, FaRegUser } from 'react-icons/fa'
 import { SiMyspace } from 'react-icons/si'
+import { LiaDonateSolid } from 'react-icons/lia'
 const Sidebar = () => {
   const { logOut } = useAuth()
   const [isActive, setActive] = useState(false)
@@ -25,7 +26,7 @@ console.log(role);
   const handleToggle = () => {
     setActive(!isActive)
   }
-  const isAdmin = false
+  const isAdmin = true
   return (
     <>
       {/* Small Screen Navbar */}
@@ -54,7 +55,7 @@ console.log(role);
 
       {/* Sidebar */}
       <div
-        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 w-80 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
+        className={`z-10 md:fixed flex flex-col justify-between overflow-x-hidden bg-gray-100 w-60 space-y-6 px-2 py-4 absolute inset-y-0 left-0 transform ${
           isActive && '-translate-x-full'
         }  md:translate-x-0  transition duration-200 ease-in-out`}
       >
@@ -82,7 +83,7 @@ console.log(role);
              {
               isAdmin ?<>
                {/* Statistics */}
-               <MenuItem label=' Add a pet' address='/dashboard' icon={IoMdAdd}/>
+               <MenuItem label=' Add a pet' address='/dashboard/addPets' icon={IoMdAdd}/>
             
             {/* Mya dded pets */}
             <MenuItem label='My added pets' address='my-added' icon={MdOutlinePets}/>
@@ -101,22 +102,15 @@ console.log(role);
               </>
               :<>
                {/*  Users */}
-               <MenuItem label='Users' address='/dashboard' icon={IoMdAdd}/>
+               <MenuItem label='Users' address='/dashboard' icon={FaRegUser}/>
             
             {/*  All Pets */}
             <MenuItem label='All Pets' address='all-ets' icon={MdOutlinePets}/>
            
-            {/*  Adoption Request */}
-            <MenuItem label='\All Donations ' address='all-donations ' icon={VscGitPullRequestGoToChanges}/>
+            {/*   All Donations  */}
+            <MenuItem label='All Donations ' address='all-donations ' icon={LiaDonateSolid}/>
             
-            {/* Create Donation Campaign */}
-            <MenuItem label='Create Donation Campaign' address='create-donation' icon={MdBorderColor}/>
-            
-            {/*  MyDonation Campaigns */}
-            <MenuItem label='My Donation Campaigns' address='myDonation-campaigns' icon={FaDonate}/>
-            
-            {/*   My Donations */}
-            <MenuItem label='My Donations' address=' my-donations' icon={BiDonateHeart}/>
+           
               </>
              }
               

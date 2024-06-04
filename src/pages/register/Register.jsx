@@ -13,34 +13,6 @@ const Register = () => {
   const [imageText, setImageText] = useState("Upload image");
   const [error,setError] = useState()
   const navigate = useNavigate()
-//   const {
-//     register,
-//     handleSubmit,
-//     reset,
-//     formState: { errors },
-//   } = useForm();
-//   const onSubmit = async(data) => {
-// console.log(data);
-
-// try {
-    
-//             setLoading(true)
-//             // image upload 
-            
-//           const image_url = await imageUpload(data.image);
-//         //   user register
-//         const result = await createUser(data.email,data.password)
-//         console.log(result);
-//         await updateUserProfile(data.name,image_url)
-//         navigate("/");
-//           toast.success("Registration successfully");
-    
-//         } catch (err) {
-//           console.log(err);
-//           toast.error(err.message)
-//         }
-
-//   }
   const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
