@@ -13,6 +13,7 @@ import AddPets from "../pages/Dashboard/Add_pets/AddPets";
 import MyAddedPets from "../pages/Dashboard/MyAddedPets/MyAddedPets";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import UpdatePet from "../pages/Dashboard/Add_pets/UpdatePet";
+import CreateDonationCampaign from "../pages/Dashboard/CreateDonationCampaign/CreateDonationCampaign";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path:'updatePets/:id',
         element:<PrivateRoute><UpdatePet/></PrivateRoute>
+      },
+      {
+        path:'create-donation',
+        element:<PrivateRoute><CreateDonationCampaign/></PrivateRoute>
       }
     ],
   },
