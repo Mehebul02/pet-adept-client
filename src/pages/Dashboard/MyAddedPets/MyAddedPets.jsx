@@ -116,10 +116,10 @@ const MyAddedPets = () => {
             </div></div>
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
-                       sdfsdfds
+                       {petItem.status}
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <button className="btn-link">Update</button>
+                      <Link to={`/dashboard/updatePets/${petItem._id}`}><button className="btn-link">Update</button></Link>
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                    

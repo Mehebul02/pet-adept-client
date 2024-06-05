@@ -80,6 +80,8 @@ const AddPets = () => {
         longDescription: data.longDescription,
         email: user?.email,
         date: Date.now(),
+        adopted:false,
+        status:'Not Adopted'
       };
       console.log(petsItem);
       const petsRes = await axiosSecure.post(`/pets`, petsItem);

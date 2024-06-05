@@ -38,7 +38,7 @@ const Navbars = () => {
           <Dropdown.Header>
             <span className="block text-sm font-medium font-poppins">{user?.displayName}</span>
           </Dropdown.Header>
-          <Link to='/dashboard'>
+          <Link to='/dashboard/my-added'>
           <Dropdown.Item className=" font-poppins font-bold">Dashboard</Dropdown.Item>
           </Link>
           <Dropdown.Item onClick={logOut} className="font-medium font-poppins">Sign out</Dropdown.Item>

@@ -11,6 +11,8 @@ import ErrorPage from "../pages/error_page/ErrorPage";
 import Dashboard from "../layouts/Dashboard/Dashboard";
 import AddPets from "../pages/Dashboard/Add_pets/AddPets";
 import MyAddedPets from "../pages/Dashboard/MyAddedPets/MyAddedPets";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import UpdatePet from "../pages/Dashboard/Add_pets/UpdatePet";
 
 const router = createBrowserRouter([
   {
@@ -55,11 +57,15 @@ const router = createBrowserRouter([
       // user route
       {
         path: "addPets",
-        element: <AddPets />,
+        element: <PrivateRoute><AddPets /></PrivateRoute>,
       },
       {
         path:'my-added',
-        element:<MyAddedPets/>
+        element:<PrivateRoute><MyAddedPets/></PrivateRoute>
+      },
+      {
+        path:'updatePets/:id',
+        element:<PrivateRoute><UpdatePet/></PrivateRoute>
       }
     ],
   },
