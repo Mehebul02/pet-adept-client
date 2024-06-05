@@ -9,8 +9,8 @@ import CheckOutForm from "./CheckOutForm";
 
 
 
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Pk);
 const DonationDetails = () => {
-  const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Pk);
   const [showModal, setShowModal] = useState(false);
 const [donation,isLoading]=useDonationCampaigns()
   if (isLoading) {
@@ -66,16 +66,16 @@ const [donation,isLoading]=useDonationCampaigns()
             aria-modal="true"
             aria-labelledby="modal-headline"
           >
-            <form >
+            
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="mb-4">
                   <label htmlFor="donationAmount" className="block text-gray-700 text-sm font-bold mb-2">
-                    Donation Amount:{donation?.donatedAmount} <br />
+                    Donation Amount:{donation?.maximumDonate} <br />
                     pet name:{donation?.name}
                   </label>
                   {/* Elements  */}
-                   <Elements stripe={stripePromise}>
-        <CheckOutForm  />
+                   <Elements stripe={stripePromise} >
+        <CheckOutForm />
         </Elements>
                 </div>
                 <div className="mb-4">
@@ -88,12 +88,12 @@ const [donation,isLoading]=useDonationCampaigns()
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                {/* <button
+                <button 
                   // type="submit"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
                   Donate
-                </button> */}
+                </button>
                 <button
                   onClick={() => setShowModal(false)}
                   type="button"
@@ -102,7 +102,7 @@ const [donation,isLoading]=useDonationCampaigns()
                   Cancel
                 </button>
               </div>
-            </form>
+            
           </div>
         </div>
       </div>
