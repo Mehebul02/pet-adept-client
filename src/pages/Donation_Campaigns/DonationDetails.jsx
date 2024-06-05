@@ -2,14 +2,16 @@
 import Container from "../shared/Container";
 import Skeleton from "../../components/skeleton/Skeleton";
 import { useState } from "react";
-import Payment from "./Payment";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import useDonationCampaigns from "../../hooks/useDonationCampaigns";
+import CheckOutForm from "./CheckOutForm";
+
+
 
 const DonationDetails = () => {
-
+  const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Pk);
   const [showModal, setShowModal] = useState(false);
-
- 
 const [donation,isLoading]=useDonationCampaigns()
   if (isLoading) {
     return <Skeleton />;
@@ -47,19 +49,7 @@ const [donation,isLoading]=useDonationCampaigns()
             Donate Now
           </button>
         </div>
-      
-{/* <div className="container mx-auto py-8">
-      <h1 className="text-3xl font-semibold mb-4">Donation Details</h1>
-      <p className="mb-4">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec urna rhoncus,
-        gravida odio non, facilisis felis.
-      </p>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={() => setShowModal(true)}
-      >
-        Donate Now
-      </button> */}
+ 
 
       {/* Donation Modal */}
       <div className={`fixed inset-0 overflow-y-auto ${showModal ? 'block' : 'hidden'}`}>
@@ -80,18 +70,13 @@ const [donation,isLoading]=useDonationCampaigns()
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="mb-4">
                   <label htmlFor="donationAmount" className="block text-gray-700 text-sm font-bold mb-2">
-                    Donation Amount
+                    Donation Amount:{donation?.donatedAmount} <br />
+                    pet name:{donation?.name}
                   </label>
-                  {/* <input
-                    type="number"
-                    id="donationAmount"
-                    value={donationAmount}
-                    onChange={(e) => setDonationAmount(e.target.value)}
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    placeholder="Enter donation amount"
-                    required
-                  /> */}
-                  <Payment donate={donation.donatedAmount}/>
+                  {/* Elements  */}
+                   <Elements stripe={stripePromise}>
+        <CheckOutForm  />
+        </Elements>
                 </div>
                 <div className="mb-4">
                   <label htmlFor="cardElement" className="block text-gray-700 text-sm font-bold mb-2">

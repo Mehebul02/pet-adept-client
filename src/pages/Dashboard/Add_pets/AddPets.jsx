@@ -25,72 +25,77 @@ const AddPets = () => {
   const [imagePreview, setImagePreview] = useState();
   const [imageText, setImageText] = useState("Upload image");
   const [selectedOption, setSelectedOption] = useState(null);
-  const axiosCommon = useAxiosCommon();
   const axiosSecure = useAxiosSecure();
-  const { loading } = useAuth();
-  const { register, handleSubmit, reset } = useForm();
-const navigate=useNavigate()
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+  const axiosCommon = useAxiosCommon();
   const handleImage = (image) => {
     setImagePreview(URL.createObjectURL(image));
     setImageText(image.name);
   };
-  const handleSubmitPets =async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const image = form.image.files[0];
-    const name = form.name.value;
-    const age = form.age.value;
-    const location = form.location.value;
-    const category = form.category.value 
-    const shortDescription = form.shortDescription.value 
-    const longDescription = form.longDescription.value 
-   
-   
-    try {
-         const image_url = await imageUpload(image)
-        const petsItem={
-            image:image_url,
-            name,age,location,category,shortDescription,longDescription
-        }
-        console.log(petsItem);
-        const { data } = await axiosSecure.post(`/pets`,petsItem);
-        console.log(data);
-  
-        toast.success("Create Assignment Successfully");
-        form.reset();
+  // const handleSubmitPets =async (e) => {
+  //   e.preventDefault();
+  //   const form = e.target;
+  //   const image = form.image.files[0];
+  //   const name = form.name.value;
+  //   const age = form.age.value;
+  //   const location = form.location.value;
+  //   const category = form.category.value
+  //   const shortDescription = form.shortDescription.value
+  //   const longDescription = form.longDescription.value
+  //   const email = user?.email
+  //   const date = Date.now()
+
+  //   try {
+  //        const image_url = await imageUpload(image)
+  //       const petsItem={
+  //           image:image_url,
+  //           name,age,location,category,shortDescription,longDescription,email,date
+  //       }
+  //       console.log(petsItem);
+  //       const { data } = await axiosSecure.post(`/pets`,petsItem);
+  //       console.log(data);
+
+  //       toast.success("Create Assignment Successfully");
+  //       form.reset();
+  //       navigate('/dashboard/my-added')
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+
+  // };
+  const { register, handleSubmit, reset } = useForm();
+  const onSubmit = async (data) => {
+    const imageFile = { image: data.image[0] };
+
+    const res = await axiosCommon.post(image_hosting_api, imageFile, {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    });
+    if (res.data.success) {
+      const petsItem = {
+        image: res.data.data.display_url,
+        name: data.petName,
+        category: data.category,
+        age: data.age,
+        location: data.location,
+        shortDescription: data.shortDescription,
+        longDescription: data.longDescription,
+        email: user?.email,
+        date: Date.now(),
+      };
+      const petsRes = await axiosSecure.post(`/pets`, petsItem);
+      console.log(petsRes);
+      if (petsRes.data.insertedId) {
+        reset();
+        toast.success("Add pets successfully");
         navigate('/dashboard/my-added')
-      } catch (err) {
-        console.log(err);
       }
-  
+    }
+    console.log(imageFile);
+    console.log(res.data);
   };
-  //   const onSubmit = async(data) => {
-  //     console.log(data);
-  //     try{
-
-  //     }
-  // const imageFile = { image: data.image[0] };
-
-  // const res = await axiosCommon.post(image_hosting_api, imageFile, {
-  //   headers: {
-  //     "content-type": "multipart/form-data",
-  //   },
-  // });
-  // if (res.data.success) {
-  //     const menuItem = {
-  //       name: data.name,
-  //       category: data.category,
-  //       image: res.data.data.display_url,
-  //     };
-  //     const menuRes = await axiosSecure.post(`/pets`, menuItem);
-  //     console.log(menuRes);
-  //     if(menuRes.data.insertedId){
-  //       reset()
-  //       toast.success('Add item successfully')
-  //     }
-  //   }
-  // console.log(res);
-  //   }
 
   return (
     <Container>
@@ -100,23 +105,21 @@ const navigate=useNavigate()
         </h1>
         {/* pet form  */}
         <div>
-          <form onSubmit={handleSubmitPets}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             {/* img  */}
             <div className=" p-4 dark:bg-white w-full  mx-auto  rounded-lg flex gap-6 items-center">
               <div className="file_upload px-5 py-3 relative border-4 border-dotted border-gray-300 rounded-lg">
                 <div className="flex flex-col  ">
                   <label>
-                    <input
-                      // {...register('image')}
-                      className="text-sm cursor-pointer w-80 hidden"
-                      type="file"
-                      name="image"
-                      onChange={(e) => handleImage(e.target.files[0])}
-                      id="image"
-                      accept="image/*"
-                      hidden
-                    />
-                    <div
+                    <div className="form-control w-full my-6">
+                      <input
+                        {...register("image", { required: true })}
+                        required
+                        type="file"
+                        className="file-input file-input-bordered w-full max-w-xs"
+                      />
+                    </div>
+                    {/* <div
                       className="bg-[#005A55] text-white border border-gray-300 rounded font-semibold cursor-pointer p-1 px-3
     "
                     >
@@ -125,18 +128,18 @@ const navigate=useNavigate()
                           "..." +
                           imageText.split(".")[1]
                         : imageText}
-                    </div>
+                    </div> */}
                   </label>
                 </div>
               </div>
-              <div className="h-20 w-20 object-cover overflow-hidden flex items-center ">
+              {/* <div className="h-20 w-20 object-cover overflow-hidden flex items-center ">
                 {imagePreview && (
                   <img
                     className="rounded-lg border-2 border-[#f43f5e]"
                     src={imagePreview}
                   ></img>
                 )}
-              </div>
+              </div> */}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 ">
@@ -148,8 +151,8 @@ const navigate=useNavigate()
                   </span>
                 </div>
                 <input
-                  //   {...register('name')}
-                  name="name"
+                  {...register("petName")}
+                  name="petName"
                   type="text"
                   placeholder="Pet name"
                   className="input input-bordered valid:border-[#005A55] w-full "
@@ -163,7 +166,7 @@ const navigate=useNavigate()
                   </span>
                 </div>
                 <input
-                //   {...register("age")}
+                  {...register("age")}
                   name="age"
                   type="number"
                   placeholder="Pet Age"
@@ -179,7 +182,7 @@ const navigate=useNavigate()
                   </span>
                 </div>
                 <Select
-                  // {...register("category")}
+                  {...register("category")}
                   name="category"
                   styles={{
                     control: (baseStyles, state) => ({
@@ -200,7 +203,7 @@ const navigate=useNavigate()
                   </span>
                 </div>
                 <input
-                  // {...register("location")}
+                  {...register("location")}
                   name="location"
                   type="text"
                   placeholder="Enter the location where the pet can be picked up"
@@ -215,7 +218,7 @@ const navigate=useNavigate()
                   </span>
                 </div>
                 <input
-                  // {...register("shortDescription")}
+                  {...register("shortDescription")}
                   name="shortDescription"
                   type="text"
                   placeholder="Short description"
@@ -230,7 +233,7 @@ const navigate=useNavigate()
                   </span>
                 </div>
                 <textarea
-                  // {...register("longDescription")}
+                  {...register("longDescription")}
                   name="longDescription"
                   placeholder="Long description,"
                   rows="3"

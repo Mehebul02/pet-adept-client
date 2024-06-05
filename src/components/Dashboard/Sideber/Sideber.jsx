@@ -6,7 +6,7 @@ import { AiOutlineBars } from 'react-icons/ai'
 import { NavLink } from 'react-router-dom'
 import useAuth from '../../../hooks/useAuth'
 import { Link } from 'react-router-dom'
-import useRole from '../../../hooks/useRole'
+// import useRole from '../../../hooks/useRole'
 import MenuItem from './menu/MenuItem'
 import { IoMdAdd } from 'react-icons/io'
 import logo from '../../../assets/images/logo/logo.png'
@@ -20,8 +20,8 @@ import { LiaDonateSolid } from 'react-icons/lia'
 const Sidebar = () => {
   const { logOut } = useAuth()
   const [isActive, setActive] = useState(false)
-const [role]=useRole()
-console.log(role);
+// const [role]=useRole()
+// console.log(role);
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive)

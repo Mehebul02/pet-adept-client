@@ -5,14 +5,14 @@ import { useParams } from "react-router-dom";
 const useDonationCampaigns = () => {
     const {id}=useParams()
     const axiosSecure = useAxiosSecure()
-    const { data: donation = {}, isLoading } = useQuery({
+    const { data: donation = {}, isLoading,refetch } = useQuery({
         queryKey: ["donation"],
         queryFn: async () => {
           const { data } = await axiosSecure.get(`/donation/${id}`);
           return data;
         },
       });
-    return [donation,isLoading]
+    return [donation,isLoading,refetch]
 };
 
 export default useDonationCampaigns;
