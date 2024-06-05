@@ -1,8 +1,8 @@
 import useMyPet from "../../../hooks/useMyPet";
 
 const MyAddedPets = () => {
-  // const [pet]=useMyPet()
-  // console.log(pet);
+  const [pet]=useMyPet()
+  console.log(pet);
     return (
         <div>
            <div className="flex flex-col mt-6">
@@ -59,42 +59,43 @@ const MyAddedPets = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
                   
-                      <tr>
-                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          2312
-                        </td>
+                     {
+                      pet.map((petItem,indx)=> <tr key={indx}>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {indx+1}
+                      </td>
 
-                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          title
-                        </td>
-                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          title
-                        </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                       {petItem.name}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {petItem.category}
+                      </td>
 
-                        <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          {/* {submit.status} */}
-                          {/* <span
-                            className={`h-1.5 w-1.5 rounded-full ${
-                              submit.status === "Pending" && "bg-yellow-500"
-                            }  ${submit.status === "Complete" && "bg-green-500"} `}
-                          ></span> */}
-                          fdsfds
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                         sdfsdfds
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        <button className="btn-link">Update</button>
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                     
-                        <button  className="btn-link text-red-600 font-semibold">Delete</button>
-                  
-                        </td>
-                        <td className="px-4 py-4 text-sm whitespace-nowrap">
-                       <button  className="btn-link text-red-600 font-semibold">Adopted</button>
-                        </td>
-                      </tr>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                      <div className="flex items-center gap-3">
+            <div className="avatar">
+              <div className="mask mask-squircle w-12 h-12">
+                <img src={petItem.image} alt="Avatar Tailwind CSS Component" />
+              </div>
+            </div></div>
+                      </td>
+                      <td className="px-4 py-4 text-sm whitespace-nowrap">
+                       sdfsdfds
+                      </td>
+                      <td className="px-4 py-4 text-sm whitespace-nowrap">
+                      <button className="btn-link">Update</button>
+                      </td>
+                      <td className="px-4 py-4 text-sm whitespace-nowrap">
+                   
+                      <button  className="btn-link text-red-600 font-semibold">Delete</button>
+                
+                      </td>
+                      <td className="px-4 py-4 text-sm whitespace-nowrap">
+                     <button  className="btn-link text-red-600 font-semibold">Adopted</button>
+                      </td>
+                    </tr>)
+                     }
                    
                   </tbody>
                 </table>

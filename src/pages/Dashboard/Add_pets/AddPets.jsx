@@ -22,17 +22,13 @@ const options = [
 const image_hosting_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddPets = () => {
-  const [imagePreview, setImagePreview] = useState();
-  const [imageText, setImageText] = useState("Upload image");
+  
   const [selectedOption, setSelectedOption] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();
   const navigate = useNavigate();
   const axiosCommon = useAxiosCommon();
-  const handleImage = (image) => {
-    setImagePreview(URL.createObjectURL(image));
-    setImageText(image.name);
-  };
+
   // const handleSubmitPets =async (e) => {
   //   e.preventDefault();
   //   const form = e.target;
