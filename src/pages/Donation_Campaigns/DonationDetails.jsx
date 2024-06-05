@@ -1,29 +1,16 @@
-import { useParams } from "react-router-dom";
+
 import Container from "../shared/Container";
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Skeleton from "../../components/skeleton/Skeleton";
-import { MdDateRange } from "react-icons/md";
-import { CiLocationOn } from "react-icons/ci";
 import { useState } from "react";
+import Payment from "./Payment";
+import useDonationCampaigns from "../../hooks/useDonationCampaigns";
 
 const DonationDetails = () => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const handleDonateNowClick = () => {
-  //   setIsModalOpen(true);
-  // };
+  const [showModal, setShowModal] = useState(false);
 
-  const axiosSecure = useAxiosSecure();
-  const { id } = useParams();
-  const { data: donation = {}, isLoading } = useQuery({
-    queryKey: ["donation"],
-    queryFn: async () => {
-      const { data } = await axiosSecure.get(`/donation/${id}`);
-      return data;
-    },
-  });
-
+ 
+const [donation,isLoading]=useDonationCampaigns()
   if (isLoading) {
     return <Skeleton />;
   }
@@ -53,15 +40,108 @@ const DonationDetails = () => {
         </span>
 
         <div className="text-center">
-          <button
+          <button onClick={() => setShowModal(true)}
             className="mt-3 text-center text-xl font-poppins font-semibold px-4 py-2 bg-green-500 text-white rounded"
             //   onClick={() => openAdoptModal(pet._id, pet.name, pet.image)}
           >
             Donate Now
           </button>
         </div>
+      
+{/* <div className="container mx-auto py-8">
+      <h1 className="text-3xl font-semibold mb-4">Donation Details</h1>
+      <p className="mb-4">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce nec urna rhoncus,
+        gravida odio non, facilisis felis.
+      </p>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={() => setShowModal(true)}
+      >
+        Donate Now
+      </button> */}
+
+      {/* Donation Modal */}
+      <div className={`fixed inset-0 overflow-y-auto ${showModal ? 'block' : 'hidden'}`}>
+        <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+          <div className="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          </div>
+          <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+        
+          </span>
+          <div
+            className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="modal-headline"
+          >
+            <form >
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="mb-4">
+                  <label htmlFor="donationAmount" className="block text-gray-700 text-sm font-bold mb-2">
+                    Donation Amount
+                  </label>
+                  {/* <input
+                    type="number"
+                    id="donationAmount"
+                    value={donationAmount}
+                    onChange={(e) => setDonationAmount(e.target.value)}
+                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    placeholder="Enter donation amount"
+                    required
+                  /> */}
+                  <Payment donate={donation.donatedAmount}/>
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="cardElement" className="block text-gray-700 text-sm font-bold mb-2">
+                    Card Details
+                  </label>
+                  {/* <Elements stripe={stripePromise}>
+                    {/* Include Stripe credit card element here */}
+                  {/* </Elements> */} 
+                </div>
+              </div>
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                {/* <button
+                  // type="submit"
+                  className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Donate
+                </button> */}
+                <button
+                  onClick={() => setShowModal(false)}
+                  type="button"
+                  className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
 
+      {/* Donation Campaigns */}
+      <div className="mt-8">
+        <h2 className="text-2xl font-semibold mb-4">Donation Campaigns</h2>
+        {/* <ul>
+          {donation.map((donation) => (
+            <li key={donation.id} className="mb-2">
+              <p>{donation.donor} donated ${donation.amount}</p>
+            </li>
+          ))}
+        </ul> */}
+      </div>
+
+      {/* Recommended Donation Section */}
+      <div className="mt-8">
+        <h2 className="text-2xl font-semibold mb-4">Recommended Donation Campaigns</h2>
+        <div>
+          {/* Display recommended donation campaigns here */}
+        </div>
+      </div>
+    </div>
       
     </Container>
   );

@@ -1,8 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
+// import { useQuery } from "@tanstack/react-query";
+// import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../shared/Container";
 import DonationCard from "./DonationCard";
 import SkeletonPetsCart from "../../components/skeletonPetsCart/SkeletonPetsCart";
+import useDonationCampaigns from "../../hooks/useDonationCampaigns";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const DonationCampaigns = () => {
     const axiosSecure = useAxiosSecure()
@@ -13,6 +16,7 @@ const DonationCampaigns = () => {
             return data
         }
     })
+    // const [donations,isLoading]= useDonationCampaigns()
     if(isLoading){
         return <SkeletonPetsCart/>
     }
