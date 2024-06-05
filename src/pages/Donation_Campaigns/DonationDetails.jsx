@@ -69,25 +69,29 @@ const [donation,isLoading]=useDonationCampaigns()
             
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="mb-4">
-                  <label htmlFor="donationAmount" className="block text-gray-700 text-sm font-bold mb-2">
+                <h1 className="block text-gray-700 text-sm font-bold m-2"> Pet name: {donation?.name}</h1>
+                  <label htmlFor="donationAmount" className="block text-gray-700 text-sm font-bold m-2">
                     Donation Amount:{donation?.maximumDonate} <br />
-                    pet name:{donation?.name}
+                   
                   </label>
+                  
                   {/* Elements  */}
-                   <Elements stripe={stripePromise} >
-        <CheckOutForm />
+                  <div className="my-10">
+                  <Elements stripe={stripePromise} >
+        <CheckOutForm setShowModal={setShowModal} />
         </Elements>
+                  </div>
                 </div>
-                <div className="mb-4">
-                  <label htmlFor="cardElement" className="block text-gray-700 text-sm font-bold mb-2">
+                <div >
+                  {/* <label htmlFor="cardElement" className="block text-gray-700 text-sm font-bold mb-2">
                     Card Details
-                  </label>
+                  </label> */}
                   {/* <Elements stripe={stripePromise}>
                     {/* Include Stripe credit card element here */}
                   {/* </Elements> */} 
                 </div>
               </div>
-              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+              {/* <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button 
                   // type="submit"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
@@ -101,7 +105,7 @@ const [donation,isLoading]=useDonationCampaigns()
                 >
                   Cancel
                 </button>
-              </div>
+              </div> */}
             
           </div>
         </div>
