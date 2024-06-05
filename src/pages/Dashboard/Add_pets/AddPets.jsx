@@ -81,6 +81,7 @@ const AddPets = () => {
         email: user?.email,
         date: Date.now(),
       };
+      console.log(petsItem);
       const petsRes = await axiosSecure.post(`/pets`, petsItem);
       console.log(petsRes);
       if (petsRes.data.insertedId) {
@@ -177,9 +178,9 @@ const AddPets = () => {
                     Category
                   </span>
                 </div>
-                <Select
+                {/* <Select
                   {...register("category")}
-                  name="category"
+               
                   styles={{
                     control: (baseStyles, state) => ({
                       ...baseStyles,
@@ -189,7 +190,14 @@ const AddPets = () => {
                   defaultValue={selectedOption}
                   onChange={setSelectedOption}
                   options={options}
-                />
+                /> */}
+                <select {...register("category")}>
+        <option value="carts">Carts</option>
+        <option value="rabbits">Rabbits</option>
+        <option value="dogs">Dogs</option>
+        <option value="fish">Fish</option>
+        <option value="birds">Birds</option>
+      </select>
               </label>
               {/* pet location  */}
               <label className="form-control w-full ">
