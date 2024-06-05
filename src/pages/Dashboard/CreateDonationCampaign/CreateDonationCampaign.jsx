@@ -35,7 +35,7 @@ const CreateDonationCampaign = () => {
       console.log(donationRes);
       if (donationRes.data.insertedId) {
         reset();
-        toast.success("Add pets successfully");
+        toast.success(" Create Donation Campaign successfully");
         // navigate('/dashboard/my-added')
       }
     }

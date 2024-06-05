@@ -8,7 +8,7 @@ const useDonationCampaigns = () => {
     const { data: donation = {}, isLoading,refetch } = useQuery({
         queryKey: ["donation"],
         queryFn: async () => {
-          const { data } = await axiosSecure.get(`/donation/${id}`);
+          const { data } = await axiosSecure.get(`/donation-campaign/${id}`);
           return data;
         },
       });

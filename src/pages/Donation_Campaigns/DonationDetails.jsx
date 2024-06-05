@@ -32,14 +32,14 @@ const [donation,isLoading]=useDonationCampaigns()
           <p className="text-gray-700 font-poppins font-medium text-base flex items-center gap-2">
             <span className="font-semibold font-poppins text[#34495e]">
               Max Donation: $
-              <span className="font-semibold">{donation.maxDonation}</span>
+              <span className="font-semibold">{donation.maximumDonate}</span>
             </span>
           </p>
         </div>
 
-        <span className="font-semibold font-poppins">
+        {/* <span className="font-semibold font-poppins">
           Donated: ${donation.donatedAmount}
-        </span>
+        </span> */}
 
         <div className="text-center">
           <button onClick={() => setShowModal(true)}
