@@ -98,7 +98,7 @@ const Sidebar = () => {
             <MenuItem label='My Donation Campaigns' address='myDonation-campaigns' icon={FaDonate}/>
             
             {/*   My Donations */}
-            <MenuItem label='My Donations' address=' my-donations' icon={BiDonateHeart}/>
+            <MenuItem label='My Donations' address='my-donations' icon={BiDonateHeart}/>
               </>
               :<>
                {/*  Users */}

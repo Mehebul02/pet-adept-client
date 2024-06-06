@@ -1,34 +1,39 @@
 
-import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
+import { CardElement,  useElements, useStripe } from "@stripe/react-stripe-js";
 import { useEffect, useState } from "react";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useDonationCampaigns from "../../hooks/useDonationCampaigns";
-import useAxiosCommon from "../../hooks/useAxiosCommon";
+
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const CheckOutForm = ({setShowModal}) => {
     const stripe = useStripe();
     const elements = useElements();
     const [error,setError] = useState()
-    const {user} = useAuth()
-    const axiosCommon =useAxiosCommon()
+    const {user,loading} = useAuth()
+  
     const [clientSecret, setClientSecret] = useState()
     const axiosSecure =useAxiosSecure()
     const [donation,isLoading]=useDonationCampaigns()
     const totalDonate = donation.maximumDonate
-    console.log(totalDonate);
+   const navigate = useNavigate()
 useEffect(()=>{
+ if(totalDonate > 0){
   axiosSecure.post(`/create-payment-intent`,{maximumDonate:totalDonate})
   .then(res =>{
     console.log(res.data.clientSecret);
     setClientSecret(res.data.clientSecret)
   })
+ }
 },[axiosSecure,totalDonate])
   const handleSubmit = async (event) => {
     // Block native form submission.
     event.preventDefault();
-const donation = event.target.donation.value
-console.log(donation);
+const donationIn = event.target.donation.value
+// console.log(donation);
     if (!stripe || !elements) {
       
       return;
@@ -71,6 +76,20 @@ console.log(donation);
       console.log('payment intent',paymentIntent);
       if(paymentIntent.status === "succeeded"){
         console.log('Transaction id',paymentIntent.id);
+        // naw save the payment in the data base 
+        const donations = {
+          name:donation.name,
+          transaction_id:paymentIntent.id,
+          email:user?.email,
+          donate:donationIn,
+          date:new Date()
+        }
+        const {data} = await axiosSecure.post('/donate',donations)
+        console.log(data);
+        if(data.insertedId){
+          toast.success('Donate successfully')
+          navigate('/donation')
+        }
       }
     }
      
@@ -103,6 +122,7 @@ console.log(donation);
                  
                 name='donation'
                  type="text"
+                 required
                  placeholder="Enter the donation amount"
                  className="input input-bordered valid:border-[#005A55] w-full "
                />
@@ -112,7 +132,11 @@ console.log(donation);
                   // type="submit"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
                 >
-                  Donate
+                 {loading ? (
+                <AiOutlineLoading3Quarters className="text-center font-semibold text-xl animate-spin mx-auto" />
+              ) : (
+                "Donate"
+              )}
                 </button>
                 <button
                   onClick={() => setShowModal(false)}

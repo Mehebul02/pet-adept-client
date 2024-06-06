@@ -15,6 +15,7 @@ import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import UpdatePet from "../pages/Dashboard/Add_pets/UpdatePet";
 import CreateDonationCampaign from "../pages/Dashboard/CreateDonationCampaign/CreateDonationCampaign";
 import MyCampaigns from "../pages/Dashboard/MyCampaigns/MyCampaigns";
+import MyDonations from "../pages/Dashboard/MyDonations/MyDonations";
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path:'myDonation-campaigns',
         element:<PrivateRoute><MyCampaigns/></PrivateRoute>
+      },
+      {
+        path:'my-donations',
+        element:<PrivateRoute><MyDonations/></PrivateRoute>
       }
     ],
   },
