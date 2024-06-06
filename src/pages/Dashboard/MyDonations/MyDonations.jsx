@@ -16,6 +16,13 @@ const MyDonations = () => {
     }
   });
   console.log(myDonation);
+  const handleDelete=id=>{
+    console.log(id);
+    axiosSecure.delete(`/donation-delete/${id}`)
+    .then(res=>{
+      console.log(res.data);
+    })
+  }
   return (
     <Container>
       <div className="flex flex-col mt-6">
@@ -87,7 +94,7 @@ const MyDonations = () => {
                     $ {donation.donate}
                     </td>
                     <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <button className="btn-link">Refund</button>
+                      <button onClick={()=>handleDelete(donation.donationId)} className="btn-link">Refund</button>
                     </td>
                   </tr>)
                   }

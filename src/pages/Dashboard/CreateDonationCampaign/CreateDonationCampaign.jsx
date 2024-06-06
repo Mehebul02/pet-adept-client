@@ -28,6 +28,7 @@ const CreateDonationCampaign = () => {
         lastDate:data.lastDonate,
         shortDescription: data.shortDescription,
         longDescription: data.longDescription,
+        email:user?.email
         
       };
       console.log(donationCampaignInfo);

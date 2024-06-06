@@ -78,15 +78,17 @@ const donationIn = event.target.donation.value
         console.log('Transaction id',paymentIntent.id);
         // naw save the payment in the data base 
         const donations = {
+          donationId:donation._id,
+          image:donation.image,
           name:donation.name,
           transaction_id:paymentIntent.id,
           email:user?.email,
           donate:donationIn,
           date:new Date()
         }
-        const {data} = await axiosSecure.post('/donate',donations)
+        const {data} = await axiosSecure.patch(`/donate/${donation._id}`,{donations})
         console.log(data);
-        if(data.insertedId){
+        if(data.modifiedCount >0){
           toast.success('Donate successfully')
           navigate('/donation')
         }
