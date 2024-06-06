@@ -71,12 +71,13 @@ const [donation,isLoading]=useDonationCampaigns()
                 <div className="mb-4">
                 <h1 className="block text-gray-700 text-sm font-bold m-2"> Pet name: {donation?.name}</h1>
                   <label htmlFor="donationAmount" className="block text-gray-700 text-sm font-bold m-2">
-                    Donation Amount:{donation?.maximumDonate} <br />
+                  Max  Donation Amount:{donation?.maximumDonate} <br />
                    
                   </label>
                   
                   {/* Elements  */}
                   <div className="my-10">
+                    <h1 className="my-5 font-poppins font-semibold">Your Card Number</h1>
                   <Elements stripe={stripePromise} >
         <CheckOutForm setShowModal={setShowModal} />
         </Elements>

@@ -27,7 +27,8 @@ useEffect(()=>{
   const handleSubmit = async (event) => {
     // Block native form submission.
     event.preventDefault();
-
+const donation = event.target.donation.value
+console.log(donation);
     if (!stripe || !elements) {
       
       return;
@@ -51,6 +52,7 @@ useEffect(()=>{
       console.log('[error]', error);
     } else {
       console.log('[PaymentMethod]', paymentMethod);
+     
     }
     // confirm payment 
     const {paymentIntent,error:confirmError} = await stripe.confirmCardPayment(clientSecret,{
@@ -67,6 +69,9 @@ useEffect(()=>{
     }
     else{
       console.log('payment intent',paymentIntent);
+      if(paymentIntent.status === "succeeded"){
+        console.log('Transaction id',paymentIntent.id);
+      }
     }
      
   };
@@ -91,7 +96,18 @@ useEffect(()=>{
       {/* <button type="submit" disabled={!stripe || !clientSecret}>
         Pay
       </button> */}
-      <div className="bg-gray-50 mt-10 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+      <br />
+     <label className="mt-10">
+      <h1 className="text-xl font-poppins">Donation</h1>
+     <input
+                 
+                name='donation'
+                 type="text"
+                 placeholder="Enter the donation amount"
+                 className="input input-bordered valid:border-[#005A55] w-full "
+               />
+     </label>
+      <div className="bg-gray-50 mt-10 px-4  py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button  type="submit" disabled={!stripe || !clientSecret}
                   // type="submit"
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-500 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
