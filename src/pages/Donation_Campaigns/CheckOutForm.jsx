@@ -82,6 +82,7 @@ const donationIn = event.target.donation.value
           image:donation.image,
           name:donation.name,
           transaction_id:paymentIntent.id,
+          userName:user?.displayName,
           email:user?.email,
           donate:donationIn,
           date:new Date()

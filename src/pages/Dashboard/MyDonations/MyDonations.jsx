@@ -3,18 +3,12 @@ import Container from "../../shared/Container";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import useMyDonation from "../../../hooks/useMyDonation";
 
 const MyDonations = () => {
   const { user ,loading} = useAuth();
   const axiosSecure = useAxiosSecure();
-  const { data: myDonation = [], isLoading } = useQuery({
-    queryKey: ["myDonation"],
-    enabled: !loading && !!user?.email,
-    queryFn:async()=>{
-        const {data} = await axiosSecure.get(`/my-donation?email=${user?.email}`)
-        return data
-    }
-  });
+const [myDonation]=useMyDonation()
   console.log(myDonation);
   const handleDelete=id=>{
     console.log(id);
@@ -80,18 +74,18 @@ const MyDonations = () => {
                       <div className="flex items-center gap-3">
                         <div className="avatar">
                           <div className="mask  w-12 h-12">
-                            <img src={donation.image} alt="Avatar Tailwind CSS Component" />
+                            <img src={donation.donations.image} alt="Avatar Tailwind CSS Component" />
                           </div>
                         </div>
                       </div>
                     </td>
                     <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                      
-                     {donation.name}
+                     {donation.donations.name}
                     </td>
 
                     <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                    $ {donation.donate}
+                    $ {donation.donations.donate}
                     </td>
                     <td className="px-4 py-4 text-sm whitespace-nowrap">
                       <button onClick={()=>handleDelete(donation.donationId)} className="btn-link">Refund</button>

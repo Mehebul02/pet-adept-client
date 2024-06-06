@@ -3,17 +3,23 @@ import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Container from "../../shared/Container";
 import { TiEdit } from "react-icons/ti";
+import { useState } from "react";
+import useMyDonation from "../../../hooks/useMyDonation";
+import CampaignsRowData from "./CampaignsRowData";
 const MyCampaigns = () => {
     const {user}=useAuth()
+   
     const axiosSecure = useAxiosSecure()
-    const {data:campaigns=[]}=useQuery({
+    const {data:campaigns=[],refetch}=useQuery({
         queryKey:['campaigns'],
         queryFn:async()=>{
             const {data} = await axiosSecure.get(`/my-campaigns/${user?.email}`)
             return data
         }
     })
-    console.log(campaigns);
+    // my Donner
+   
+   
     return (
         <Container>
         <div className="flex flex-col mt-6">
@@ -51,7 +57,7 @@ const MyCampaigns = () => {
                         scope="col"
                         className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm"
                       >
-                       Donation Progress
+                       Donation 
                       </th>
   
                       <th className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm">
@@ -67,36 +73,13 @@ const MyCampaigns = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
                     {
-                      campaigns.map((campaign,indx)=><tr key={indx}>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                          {indx+1}
-                      </td>
-  
-  
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                      {campaign.name}
-                      </td>
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                       
-                       ${campaign.maximumDonate}
-                      </td>
-  
-                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                      campaigns.map((campaign,indx)=><CampaignsRowData key={indx} indx={indx} campaign={campaign} refetch={refetch}></CampaignsRowData>)
+
                     
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        <button  className="btn-link">Refund</button>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        <button  className="btn-link"><TiEdit></TiEdit> </button>
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        <button  className="btn-link">View Details </button>
-                      </td>
-                    </tr>)
                     }
                   </tbody>
                 </table>
+             
               </div>
             </div>
           </div>
