@@ -52,27 +52,28 @@ const PetDetails = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
-    const petId = form.petId.value;
-    const petName = form.petName.value;
-    const petImage = form.petImage.value;
-    const userName = form.userName.value;
-    const email = form.email.value;
-    const location = form.address.value;
-    const phone = form.phoneNumber.value;
+    // const petId = form.petId.value;
+    // const petName = form.petName.value;
+    // const petImage = form.petImage.value;
+    const petId = pet._id
+    const email = pet?.email
+    const adoptName = form.userName.value;
+    const adoptEmail = form.email.value;
+    const adoptLocation = form.address.value;
+    const adoptPhone = form.phoneNumber.value;
     const status='request'
     const adoptDetails = {
       petId,
-      petName,
-      petImage,
-      userName,
       email,
-      location,
-      phone,
+      adoptName,
+      adoptEmail,
+      adoptLocation,
+      adoptPhone,
       status
     };
 
     try {
-      const { data } = await axiosSecure.post("/adopts", adoptDetails);
+      const { data } = await axiosSecure.post(`/adopts`, adoptDetails);
       if (data.insertedId) {
         toast.success("Adopt submit successfully");
         navigate("/petListing");

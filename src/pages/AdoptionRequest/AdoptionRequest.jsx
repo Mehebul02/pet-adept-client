@@ -12,7 +12,7 @@ const AdoptionRequest = () => {
         queryKey:['myRequests'],
         enabled: !loading && !!user?.email,
         queryFn:async()=>{
-            const {data}= await axiosSecure.get(`/my-request-adopts`)
+            const {data}= await axiosSecure.get(`/my-request-adopts/${user?.email}`)
             return data
         }
     })
@@ -94,17 +94,17 @@ await mutateAsync({id,status})
                       </td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                       {myRequest.userName}
+                       {myRequest.adoptName}
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {myRequest.email}
+                        {myRequest.adoptEmail}
                       </td>
 
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                      {myRequest.phone}
+                      {myRequest.adoptPhone}
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      {myRequest.location}
+                      {myRequest.adoptLocation}
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                       <div
