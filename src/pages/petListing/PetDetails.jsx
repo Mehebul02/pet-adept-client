@@ -1,4 +1,3 @@
-
 import { Helmet } from "react-helmet-async";
 import Container from "../shared/Container";
 import { useState } from "react";
@@ -6,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 import { MdDateRange } from "react-icons/md";
 import { VscChromeClose } from "react-icons/vsc";
 import { CiLocationOn } from "react-icons/ci";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAxiosCommon from "../../hooks/useAxiosCommon";
 import { useQuery } from "@tanstack/react-query";
 import Skeleton from "../../components/skeleton/Skeleton";
@@ -19,7 +18,7 @@ const PetDetails = () => {
   const axiosCommon = useAxiosCommon();
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   //  tan stack query single data
   const { id } = useParams();
   const { data: pet = {}, isLoading } = useQuery({
@@ -30,13 +29,19 @@ const PetDetails = () => {
     },
   });
 
-  const openAdoptModal = (petId, petName, petImage) => {
-    const time = Date.now();
-    const userName = {
-      name: user?.displayName,
-      email: user?.email,
-    };
-    setPetDetails({ petId, petName, petImage, time, userName });
+  const openAdoptModal = () => {
+    // const petDetails = {
+    //   petId,
+    //   petName,
+    //   petImage,
+    //   phoneNumber,
+    //   address,
+    //   userName: user?.displayName,
+    //   email: user?.email,
+    //   date: new Date(),
+    // };
+
+    setPetDetails();
     setIsModalOpen(true);
   };
 
@@ -46,19 +51,36 @@ const PetDetails = () => {
   // handleSubmit
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const form = event.target;
+    const petId = form.petId.value;
+    const petName = form.petName.value;
+    const petImage = form.petImage.value;
+    const userName = form.userName.value;
+    const email = form.email.value;
+    const location = form.address.value;
+    const phone = form.phoneNumber.value;
+    const status='request'
+    const adoptDetails = {
+      petId,
+      petName,
+      petImage,
+      userName,
+      email,
+      location,
+      phone,
+      status
+    };
 
     try {
-      const { data } = await axiosSecure.post("/adopts", petDetails);
-      if(data.insertedId){
-
-        toast.success('Adopt submit successfully')
-        navigate('/petListing')
+      const { data } = await axiosSecure.post("/adopts", adoptDetails);
+      if (data.insertedId) {
+        toast.success("Adopt submit successfully");
+        navigate("/petListing");
       }
       // console.log(data);
     } catch (err) {
       console.log(err);
-      toast.error(err.message)
-
+      toast.error(err.message);
     }
 
     setIsModalOpen(false);
