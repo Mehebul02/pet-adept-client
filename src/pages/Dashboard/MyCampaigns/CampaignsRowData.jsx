@@ -6,10 +6,10 @@ const CampaignsRowData = ({campaign,indx,refetch}) => {
     const [showModal, setShowModal] = useState(false);
     const axiosSecure =useAxiosSecure()
     const handleStatus =status=>{
-        console.log(status);
+        // console.log(status);
         axiosSecure.patch(`/status-update/${status}`)
         .then(res=>{
-            console.log(res.data);
+            // console.log(res.data);
         refetch()
         })
     }

@@ -56,8 +56,9 @@ const AuthProviders = ({ children }) => {
   // save user 
   const saveUser = async(user)=>{
     const currentUser ={
-      email:user?.email,
-      name:user?.displayName,
+      email:user.email,
+      name:user.displayName,
+      image:user.photoURL,
       role:'user',
       time:Date.now()
 
@@ -71,6 +72,7 @@ const AuthProviders = ({ children }) => {
       console.log("Current user", currentUser);
       setUser(currentUser);
       if(currentUser){
+        
         const userInfo ={email:currentUser.email}
         // get to token client 
         axiosCommon.post(`/jwt`,userInfo)
@@ -80,7 +82,7 @@ const AuthProviders = ({ children }) => {
             setLoading(false);
           }
         })
-       
+        
       }
       else{
         // TODO:remove token 

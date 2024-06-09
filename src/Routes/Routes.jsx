@@ -17,6 +17,8 @@ import CreateDonationCampaign from "../pages/Dashboard/CreateDonationCampaign/Cr
 import MyCampaigns from "../pages/Dashboard/MyCampaigns/MyCampaigns";
 import MyDonations from "../pages/Dashboard/MyDonations/MyDonations";
 import AdoptionRequest from "../pages/AdoptionRequest/AdoptionRequest";
+import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import AllPets from "../pages/Dashboard/AllPets/AllPets";
 
 const router = createBrowserRouter([
   {
@@ -86,6 +88,14 @@ const router = createBrowserRouter([
       {
         path:'adoption-Request',
         element:<AdoptionRequest/>
+      },
+      // admin section 
+      {
+        path:'allUser',
+        element:<AllUsers/>
+      },{
+        path:'all-pets',
+        element:<AllPets/>
       }
     ],
   },

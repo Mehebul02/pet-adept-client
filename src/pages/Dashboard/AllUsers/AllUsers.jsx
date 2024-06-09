@@ -1,22 +1,22 @@
-import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Container from "../../shared/Container";
 import useAuth from "../../../hooks/useAuth";
-import useAxiosSecure from "../../../hooks/useAxiosSecure";
-import { useQuery } from "@tanstack/react-query";
-import useMyDonation from "../../../hooks/useMyDonation";
+import { FaUser } from "react-icons/fa";
+import { BiSolidUserCheck } from "react-icons/bi";
 
-const MyDonations = () => {
-  const { user ,loading} = useAuth();
+const AllUsers = () => {
+    const {user,loading}=useAuth()
   const axiosSecure = useAxiosSecure();
-const [myDonation]=useMyDonation()
-  // console.log(myDonation);
-  const handleDelete=id=>{
-    console.log(id);
-    axiosSecure.delete(`/donation-delete/${id}`)
-    .then(res=>{
-      // console.log(res.data);
-    })
-  }
+  const { data:users=[] } = useQuery({
+    queryKey: ["users"],
+    enabled: !loading && !!user?.email,
+    queryFn: async () => {
+      const { data } = await axiosSecure.get("/allUsers");
+      return data;
+    },
+  });
+  console.log(users);
   return (
     <Container>
       <div className="flex flex-col mt-6">
@@ -40,7 +40,7 @@ const [myDonation]=useMyDonation()
                       className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm"
                     >
                       <button className="flex items-center gap-x-2">
-                        <span>Pet Image</span>
+                        <span>Name</span>
                       </button>
                     </th>
 
@@ -48,51 +48,57 @@ const [myDonation]=useMyDonation()
                       scope="col"
                       className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm"
                     >
-                      Pet Name
+                      Email
                     </th>
                     <th
                       scope="col"
                       className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm"
                     >
-                      Amount
+                      Profile
                     </th>
 
                     <th className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm">
-                      Refund
+                      Role
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200 ">
-                  {
-                    myDonation.map((donation,indx)=><tr key={indx}>
-                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+               <tbody className="bg-white divide-y divide-gray-200 ">
+                  
+                     {
+                      users.map((user,indx)=> <tr key={indx}>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                         {indx+1}
-                    </td>
+                      </td>
 
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                       {user.name}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {user.email}
+                      </td>
 
-                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                      <div className="flex items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask  w-12 h-12">
-                            <img src={donation.donations.image} alt="Avatar Tailwind CSS Component" />
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                    <div>
+                    <div className="avatar">
+              <div className="mask mask-squircle w-12 h-12">
+                <img src={user.image} alt="Avatar Tailwind CSS Component" />
+              </div>
+            </div>
+                    </div>
+                      </td>
+                      <td className="px-4 py-4 text-md whitespace-nowrap">
+                 
+                      <button><BiSolidUserCheck className="text-4xl "/></button>
+                      </td>
+                      
+                   
+                      
+                      
                      
-                     {donation.donations.name}
-                    </td>
-
-                    <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                    $ {donation.donations.donate}
-                    </td>
-                    <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <button onClick={()=>handleDelete(donation.donationId)} className="btn-link">Refund</button>
-                    </td>
-                  </tr>)
-                  }
-                </tbody>
+                    </tr>)
+                     }
+                   
+                  </tbody> 
               </table>
             </div>
           </div>
@@ -102,4 +108,4 @@ const [myDonation]=useMyDonation()
   );
 };
 
-export default MyDonations;
+export default AllUsers;

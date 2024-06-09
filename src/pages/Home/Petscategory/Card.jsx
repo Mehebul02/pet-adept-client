@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Skeleton from "../../../components/skeleton/Skeleton";
 
 const Card = ({ pet }) => {
-  console.log(pet);
+  // console.log(pet);
   const { _id, name, image, location, age } = pet;
   // console.log(image);
 

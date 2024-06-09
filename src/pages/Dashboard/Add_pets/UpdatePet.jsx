@@ -48,17 +48,17 @@ const UpdatePet = () => {
             status:'Not Adopted'
           
           };
-          console.log(petsItem);
+          // console.log(petsItem);
           const petsRes = await axiosSecure.patch(`/pets/${pet._id}`, petsItem);
-          console.log(petsRes.data);
+          // console.log(petsRes.data);
           if (petsRes.data.modifiedCount >0) {
            
             toast.success("Update pets successfully");
             navigate('/dashboard/my-added')
           }
         }
-        console.log(imageFile);
-        console.log(res.data);
+        // console.log(imageFile);
+        // console.log(res.data);
     }
     return (
         <Container>

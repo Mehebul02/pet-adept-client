@@ -85,7 +85,7 @@ const AddPets = () => {
       };
       console.log(petsItem);
       const petsRes = await axiosSecure.post(`/pets`, petsItem);
-      console.log(petsRes);
+      // console.log(petsRes);
       if (petsRes.data.insertedId) {
         reset();
         toast.success("Add pets successfully");
@@ -93,7 +93,7 @@ const AddPets = () => {
       }
     }
     console.log(imageFile);
-    console.log(res.data);
+    // console.log(res.data);
   };
 
   return (

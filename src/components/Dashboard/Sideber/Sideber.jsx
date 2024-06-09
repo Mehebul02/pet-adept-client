@@ -26,7 +26,7 @@ const Sidebar = () => {
   const handleToggle = () => {
     setActive(!isActive)
   }
-  const isAdmin = true
+  const isAdmin = false
   return (
     <>
       {/* Small Screen Navbar */}
@@ -83,7 +83,7 @@ const Sidebar = () => {
              {
               isAdmin ?<>
                {/* Statistics */}
-               <MenuItem label=' Add a pet' address='/dashboard/addPets' icon={IoMdAdd}/>
+               <MenuItem label=' Add a pet' address='addPets' icon={IoMdAdd}/>
             
             {/* Mya dded pets */}
             <MenuItem label='My added pets' address='my-added' icon={MdOutlinePets}/>
@@ -102,10 +102,10 @@ const Sidebar = () => {
               </>
               :<>
                {/*  Users */}
-               <MenuItem label='Users' address='/dashboard' icon={FaRegUser}/>
+               <MenuItem label='Users' address='allUser' icon={FaRegUser}/>
             
             {/*  All Pets */}
-            <MenuItem label='All Pets' address='all-ets' icon={MdOutlinePets}/>
+            <MenuItem label='All Pets' address='all-pets' icon={MdOutlinePets}/>
            
             {/*   All Donations  */}
             <MenuItem label='All Donations ' address='all-donations ' icon={LiaDonateSolid}/>

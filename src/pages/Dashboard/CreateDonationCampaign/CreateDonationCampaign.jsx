@@ -33,17 +33,17 @@ const CreateDonationCampaign = () => {
 
         
       };
-      console.log(donationCampaignInfo);
+      // console.log(donationCampaignInfo);
       const donationRes = await axiosSecure.post(`/donation-campaign`, donationCampaignInfo);
-      console.log(donationRes);
+      // console.log(donationRes);
       if (donationRes.data.insertedId) {
         reset();
         toast.success(" Create Donation Campaign successfully");
         // navigate('/dashboard/my-added')
       }
     }
-    console.log(imageFile);
-    console.log(res.data);
+    // console.log(imageFile);
+    // console.log(res.data);
   };
   return (
     <Container>

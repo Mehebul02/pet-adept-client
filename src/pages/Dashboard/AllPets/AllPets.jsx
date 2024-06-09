@@ -1,46 +1,64 @@
-import { Link } from "react-router-dom";
-import useMyPet from "../../../hooks/useMyPet";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-
+import Container from "../../shared/Container";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import LoadingSpinner from "../../shared/loadingSpinner/LoadingSpinner";
 
-const MyAddedPets = () => {
-  const axiosSecure = useAxiosSecure()
-  const [pet,isLoading,refetch]=useMyPet()
-  if(isLoading){
-    return <LoadingSpinner/>
-  }
-  // console.log(pet);
-  const handleDelete=async id=>{
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete(`/pets/${id}`).then((res) => {
-          if (res.data.deletedCount > 0) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
+const AllPets = () => {
+    const axiosSecure = useAxiosSecure()
+    const {data:allPets=[],refetch}=useQuery({
+        queryKey:['allPets'],
+        queryFn:async()=>{
+            const {data} = await axiosSecure('/all-pets')
+            return data
+        }
+    })
+    // handle delete 
+    const handleDelete=async id=>{
+        Swal.fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axiosSecure.delete(`/pets/${id}`).then((res) => {
+              if (res.data.deletedCount > 0) {
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success",
+                });
+              }
+              refetch()
+              // console.log(res.data);
             });
           }
-          refetch()
-          // console.log(res.data);
         });
+    
       }
-    });
 
-  }
+    //   status update
+    const {mutateAsync }=useMutation({
+        mutationFn:async({id,status})=>{
+            const {data}= await axiosSecure.patch(`/pets-status/${id}`,{status})
+            console.log(data);
+            return data 
+            
+        },
+      
+    })
+        const handleStatus=async(id, prevStatus, status)=>{
+           
+    await mutateAsync({id,status})
+             refetch()
+        }
     return (
-        <div>
-           <div className="flex flex-col mt-6">
+        <Container>
+            <div className="flex flex-col mt-6">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200  md:rounded-lg">
@@ -65,22 +83,21 @@ const MyAddedPets = () => {
                         </button>
                       </th>
 
+                      
                       <th
                         scope="col"
                         className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm"
                       >
-                        Pet category,
+                         Pet Category
                       </th>
                       <th
                         scope="col"
                         className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm"
                       >
-                         Pet image
+                         Pet Image
                       </th>
 
-                      <th className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm">
-                      Status
-                      </th>
+                      
                       <th className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm">
                       Update
                       </th>
@@ -88,14 +105,16 @@ const MyAddedPets = () => {
                       Delete
                       </th>
                       <th className="px-4 py-3.5  text-left rtl:text-right text-white font-poppins font-bold text-sm">
-                      Adopted button
+                      Status
                       </th>
+                     
+                   
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-gray-200 ">
                   
                      {
-                      pet.map((petItem,indx)=> <tr key={indx}>
+                      allPets.map((petItem,indx)=> <tr key={indx}>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
                         {indx+1}
                       </td>
@@ -115,21 +134,22 @@ const MyAddedPets = () => {
               </div>
             </div></div>
                       </td>
+                     
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
-                       {petItem.status}
-                      </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                      <Link to={`/dashboard/updatePets/${petItem._id}`}><button className="btn-link">Update</button></Link>
+                      <Link to={`/dashboard/updatePets/${petItem._id}`}>
+                      <button className="btn-link">Update</button>
+                      </Link>
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                    
                    
-                    <button onClick={()=>handleDelete(petItem._id)}  className="btn-link text-red-600 font-semibold">Delete</button>
+                    <button  onClick={()=>handleDelete(petItem._id)}  className="btn-link text-red-600 font-semibold">Delete</button>
                  
                 
                       </td>
-                      <td className="px-4 py-4 text-sm whitespace-nowrap">
-                     <button  className="btn-link text-red-600 font-semibold">Adopted</button>
+                      <td className="px-4 py-4 text-sm whitespace-nowrap ">
+                      <button onClick={()=>handleStatus(petItem._id,petItem.status,'Adopted')}  className="btn-link  font-semibold mr-5">Adopted</button>
+                     <button onClick={()=>handleStatus(petItem._id,petItem.status,'Not Adopted')} className="btn-link text-green-700 font-semibold">Not Adopted</button>
                       </td>
                     </tr>)
                      }
@@ -140,8 +160,8 @@ const MyAddedPets = () => {
             </div>
           </div>
         </div>
-        </div>
+        </Container>
     );
 };
 
-export default MyAddedPets;
+export default AllPets;
