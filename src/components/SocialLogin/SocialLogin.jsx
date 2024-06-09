@@ -3,22 +3,24 @@ import { FcGoogle } from 'react-icons/fc';
 import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { SiGithub } from 'react-icons/si';
+import toast from 'react-hot-toast';
+import useAxiosCommon from '../../hooks/useAxiosCommon';
 
 const SocialLogin = () => {
     const { signInGoogle,signInGithub } = useAuth();
-const navigate = useNavigate()
+// const navigate = useNavigate()
 
 // handle google 
-    const handleGoogleLogin=()=>{
-      signInGoogle()
-      .then(result=>{
-        console.log(result.user);
-        navigate('/')
-      })
-      .catch(err=>{
-        console.log(err);
-      })
-    }
+    // const handleGoogleLogin=()=>{
+    //   signInGoogle()
+    //   .then(result=>{
+    //     console.log(result.user);
+    //     navigate('/')
+    //   })
+    //   .catch(err=>{
+    //     console.log(err);
+    //   })
+    // }
     // handle github 
     const handleGithub=()=>{
       signInGithub()
@@ -29,27 +31,28 @@ const navigate = useNavigate()
         console.log(err);
       })
     }
-  // const navigate = useNavigate();
-//   const axiosCommon = useAxiosCommon();
-  // const handleGoogleLogin = () => {
-  //   signInWiteGoogle()
-  //     .then((result) => {
-  //       console.log(result.user);
-  //       // navigate("/");
-  //       // const userInfo = {
-  //       //   email: result.user?.email,
-  //       //   name: result.user?.displayName,
-  //       // };
-  //       // axiosCommon.post(`/users`, userInfo).then((res) => {
-  //       //   console.log(res.data);
-  //       //   toast.success("Login successfully");
-  //       //   navigate("/");
-  //       // });
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
+  const navigate = useNavigate();
+  const axiosCommon = useAxiosCommon();
+  const handleGoogleLogin = () => {
+    signInGoogle()
+      .then((result) => {
+        console.log(result.user);
+        navigate("/");
+        const userInfo = {
+          email: result.user?.email,
+          name: result.user?.displayName,
+          image:result.user?.photoURL
+        };
+        axiosCommon.post(`/users`, userInfo).then((res) => {
+          console.log(res.data);
+          toast.success("Login successfully");
+          navigate("/");
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
     return (
         <div>
         <div

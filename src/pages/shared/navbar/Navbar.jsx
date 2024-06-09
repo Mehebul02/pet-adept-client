@@ -5,8 +5,12 @@ import { Avatar, Button, Dropdown, Navbar } from "flowbite-react";
 import logo from '../../../assets/images/logo/logo.png'
 import ToggleButton from "../../ToggleButton/ToggleButton";
 import LoadingSpinner from "../loadingSpinner/LoadingSpinner";
+import useAdmin from "../../../hooks/useAdmin";
+
 const Navbars = () => {
   const {user,logOut,loading}= useAuth()
+  const [isAdmin]=useAdmin()
+  // const isAdmin = false
   if(loading){
     return <LoadingSpinner/>
   }
@@ -38,9 +42,12 @@ const Navbars = () => {
           <Dropdown.Header>
             <span className="block text-sm font-medium font-poppins">{user?.displayName}</span>
           </Dropdown.Header>
-          <Link to='/dashboard'>
+          {user && isAdmin && <Link to='/dashboard/allUser'>
           <Dropdown.Item className=" font-poppins font-bold">Dashboard</Dropdown.Item>
-          </Link>
+          </Link>}
+          {user && !isAdmin && <Link to='/dashboard/addPets'>
+          <Dropdown.Item className=" font-poppins font-bold">Dashboard</Dropdown.Item>
+          </Link>}
           <Dropdown.Item onClick={logOut} className="font-medium font-poppins">Sign out</Dropdown.Item>
         </Dropdown>
           </>:<>

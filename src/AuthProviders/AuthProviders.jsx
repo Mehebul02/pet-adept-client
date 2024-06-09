@@ -54,18 +54,17 @@ const AuthProviders = ({ children }) => {
   };
 
   // save user 
-  const saveUser = async(user)=>{
-    const currentUser ={
-      email:user.email,
-      name:user.displayName,
-      image:user.photoURL,
-      role:'user',
-      time:Date.now()
+  // const saveUser = async(user)=>{
+  //   const currentUser ={
+  //     email:user?.email,
+  //     name:user?.displayName,
+  //     image:user?.photoURL,
+     
 
-    }
-    const {data} = await axiosCommon.post('/users',currentUser)
-    return data
-  }
+  //   }
+  //   const {data} = await axiosCommon.post('/users',currentUser)
+  //   return data
+  // }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -89,7 +88,7 @@ const AuthProviders = ({ children }) => {
         localStorage.removeItem('access-token')
         setLoading(false);
       }
-      saveUser(currentUser)
+     
     });
     return () => {
       unsubscribe();
