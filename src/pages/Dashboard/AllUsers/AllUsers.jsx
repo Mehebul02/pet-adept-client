@@ -4,11 +4,12 @@ import Container from "../../shared/Container";
 import useAuth from "../../../hooks/useAuth";
 import { FaUser } from "react-icons/fa";
 import { BiSolidUserCheck } from "react-icons/bi";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
-    const {user,loading}=useAuth()
+    const {user,loading,}=useAuth()
   const axiosSecure = useAxiosSecure();
-  const { data:users=[] } = useQuery({
+  const { data:users=[] ,refetch} = useQuery({
     queryKey: ["users"],
     enabled: !loading && !!user?.email,
     queryFn: async () => {
@@ -16,7 +17,25 @@ const AllUsers = () => {
       return data;
     },
   });
-  console.log(users);
+//   console.log(users);
+const handleMakeAdmin = user =>{
+    axiosSecure.patch(`/users/admin/${user._id}`)
+    .then(res =>{
+        console.log(res.data)
+        if(res.data.modifiedCount > 0){
+            refetch();
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: `${user.name} is an Admin Now!`,
+                showConfirmButton: false,
+                timer: 1500
+              });
+              
+        }
+    })
+    
+}
   return (
     <Container>
       <div className="flex flex-col mt-6">
@@ -88,7 +107,7 @@ const AllUsers = () => {
                       </td>
                       <td className="px-4 py-4 text-md whitespace-nowrap">
                  
-                      <button><BiSolidUserCheck className="text-4xl "/></button>
+                     {user.role === 'admin' ? 'Admin': <button onClick={()=>handleMakeAdmin(user)}><BiSolidUserCheck className="text-4xl "/></button>}
                       </td>
                       
                    

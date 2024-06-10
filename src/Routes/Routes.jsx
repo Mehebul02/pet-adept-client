@@ -20,6 +20,7 @@ import AdoptionRequest from "../pages/AdoptionRequest/AdoptionRequest";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllPets from "../pages/Dashboard/AllPets/AllPets";
 import AllDonation from "../pages/Dashboard/AllDonation/AllDonation";
+import AdminRoutes from "./AdminRoutes";
 // import AdminRoutes from "./AdminRoutes";
 
 const router = createBrowserRouter([
@@ -94,14 +95,14 @@ const router = createBrowserRouter([
       // admin section 
       {
         path:'allUser',
-        element:<AllUsers/>
+        element:<AdminRoutes><AllUsers/></AdminRoutes>
       },{
         path:'all-pets',
-        element:<AllPets/>
+        element:<AdminRoutes><AllPets/></AdminRoutes>
       },
       {
         path:'all-donations',
-        element:<AllDonation/>
+        element:<AdminRoutes><AllDonation/></AdminRoutes>
       }
     ],
   },

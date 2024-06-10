@@ -6,13 +6,15 @@ import { imageUpload } from "../../utility/index";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
+import useAxiosCommon from "../../hooks/useAxiosCommon";
 
 const Register = () => {
-  const { user, createUser,updateUserProfile, loading,setLoading } = useAuth();
+  const { user, createUser,updateUserProfile, loading,setLoading,logOut } = useAuth();
   const [imagePreview, setImagePreview] = useState();
   const [imageText, setImageText] = useState("Upload image");
   const [error,setError] = useState()
   const navigate = useNavigate()
+  const axiosCommon =useAxiosCommon()
   const handleRegister = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -35,8 +37,19 @@ const Register = () => {
     const result = await createUser(email,password)
     console.log(result);
     await updateUserProfile(name,image_url)
+    const userInfo ={
+      name :name,
+      email:email,
+      image:image_url
+
+    }
+   axiosCommon.post('/users',userInfo)
+  .then(res=>{
+    console.log(res.data);
+  })
     navigate("/");
       toast.success("Registration successfully");
+      logOut()
 
     } catch (err) {
       console.log(err);
@@ -53,11 +66,6 @@ const Register = () => {
         <title> Login - Case Study </title>
       </Helmet>
       <RegisterForm
-        // onSubmit={onSubmit}
-        // handleSubmit={handleSubmit}
-        // errors={errors}
-        // reset={reset}
-        // register={register}
         handleRegister={handleRegister}
         error={error}
         handleImage={handleImage}

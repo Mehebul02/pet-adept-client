@@ -5,6 +5,7 @@ import useAuth from "../../../hooks/useAuth";
 import toast from "react-hot-toast";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import useAxiosCommon from "../../../hooks/useAxiosCommon";
+import { useNavigate } from "react-router-dom";
 const image_hosting_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const CreateDonationCampaign = () => {
@@ -12,6 +13,7 @@ const CreateDonationCampaign = () => {
   const {user, loading } = useAuth();
   const axiosSecure = useAxiosSecure()
   const axiosCommon = useAxiosCommon()
+  const navigate = useNavigate()
   const onSubmit = async (data) => {
     const imageFile = { image: data.image[0] };
 
@@ -39,7 +41,7 @@ const CreateDonationCampaign = () => {
       if (donationRes.data.insertedId) {
         reset();
         toast.success(" Create Donation Campaign successfully");
-        // navigate('/dashboard/my-added')
+        navigate('/dashboard/myDonation-campaigns')
       }
     }
     // console.log(imageFile);

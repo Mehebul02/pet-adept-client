@@ -5,14 +5,14 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const CampaignsRowData = ({campaign,indx,refetch}) => {
     const [showModal, setShowModal] = useState(false);
     const axiosSecure =useAxiosSecure()
-    const handleStatus =status=>{
-        // console.log(status);
-        axiosSecure.patch(`/status-update/${status}`)
-        .then(res=>{
-            // console.log(res.data);
-        refetch()
-        })
-    }
+    // const handleStatus =status=>{
+    //     // console.log(status);
+    //     axiosSecure.patch(`/status-update/${status}`)
+    //     .then(res=>{
+    //         // console.log(res.data);
+    //     refetch()
+    //     })
+    // }
     return (
         <>
            <tr>
@@ -33,7 +33,7 @@ const CampaignsRowData = ({campaign,indx,refetch}) => {
                       Donation Progress
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        <button onClick={()=>handleStatus(campaign._id)}  className="btn-link">{campaign.status}</button>
+                        {campaign.status}
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <button  className="btn-link"><TiEdit></TiEdit> </button>

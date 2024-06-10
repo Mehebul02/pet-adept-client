@@ -2,9 +2,47 @@ import { BiSolidEdit, BiSolidUserCheck } from "react-icons/bi";
 import Container from "../../shared/Container";
 import useAllDonation from "../../../hooks/useAllDonation";
 import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { GiCheckMark } from "react-icons/gi";
 
 const AllDonation = () => {
     const [donations,refetch]=useAllDonation()
+    const axiosSecure = useAxiosSecure()
+    const handleDelete=(id)=>{
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.delete(`/donation-delete/${id}`).then((res) => {
+            if (res.data.deletedCount > 0) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your file has been deleted.",
+                icon: "success",
+              });
+            }
+            refetch()
+            // console.log(res.data);
+          });
+        }
+      });
+    }
+    // statu update 
+    const handleStatus =status=>{
+      // console.log(status);
+      axiosSecure.patch(`/status-update/${status}`)
+      .then(res=>{
+          console.log(res.data);
+      refetch()
+      })
+  }
     return (
         <Container>
       <div className="flex flex-col mt-6">
@@ -73,10 +111,10 @@ const AllDonation = () => {
                       </td>
                       <td className="px-4 py-4 text-md whitespace-nowrap">
                  
-                    <button><MdDelete className="text-2xl" /></button>
+                    <button onClick={()=>handleDelete(donation._id)}><MdDelete className="text-2xl" /></button>
                       </td>
                       <td className="px-4 py-4 text-md whitespace-nowrap">
-                 Status
+                 <button onClick={()=>handleStatus(donation._id)}><GiCheckMark/></button>
                      
                       </td>
                       

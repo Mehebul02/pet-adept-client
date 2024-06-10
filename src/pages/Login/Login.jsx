@@ -3,10 +3,11 @@ import login from "../../assets/images/banner/login (2).png";
 import banner from "../../assets/images/banner/banner-1.png";
 import useAuth from "../../hooks/useAuth";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
 const Login = () => {
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -21,6 +22,7 @@ const Login = () => {
         const loggedUser = result.user;
         console.log(loggedUser);
         reset();
+        navigate('/')
       })
       .catch((err) => {
         console.log(err);
