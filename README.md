@@ -10,6 +10,7 @@ Currently, two official plugins are available:
 https://pet-adoption-ed896.web.app/
 * Case Study
  # Packages Name
- * Lottie React
- * React-simple-typewriter
- * React-awesome-reveal
+ * tanstack query
+ * Flowbite
+ * React-loading-skeleaton
+ *  React-Quill
