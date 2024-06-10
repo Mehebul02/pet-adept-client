@@ -4,6 +4,7 @@ import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Container from "../shared/Container";
 import toast from "react-hot-toast";
 import LoadingSpinner from "../shared/loadingSpinner/LoadingSpinner";
+import { Helmet } from "react-helmet-async";
 
 const AdoptionRequest = () => {
     const {user,loading}= useAuth()
@@ -35,6 +36,9 @@ await mutateAsync({id,status})
 
     return (
         <Container>
+          <Helmet>
+        <title> Paws Nest- Adoption Request </title>
+      </Helmet>
              <div className="flex flex-col mt-6">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">

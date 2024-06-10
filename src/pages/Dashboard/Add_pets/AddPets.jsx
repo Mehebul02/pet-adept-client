@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { imageUpload } from "../../../utility";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 // pets category
 const options = [
@@ -22,7 +23,6 @@ const options = [
 const image_hosting_key = import.meta.env.VITE_IMAGE_API_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 const AddPets = () => {
-  
   const [selectedOption, setSelectedOption] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useAuth();
@@ -80,8 +80,8 @@ const AddPets = () => {
         longDescription: data.longDescription,
         email: user?.email,
         date: Date.now(),
-        adopted:false,
-        status:'Not Adopted'
+        adopted: false,
+        status: "Not Adopted",
       };
       console.log(petsItem);
       const petsRes = await axiosSecure.post(`/pets`, petsItem);
@@ -89,7 +89,7 @@ const AddPets = () => {
       if (petsRes.data.insertedId) {
         reset();
         toast.success("Add pets successfully");
-        navigate('/dashboard/my-added')
+        navigate("/dashboard/my-added");
       }
     }
     console.log(imageFile);
@@ -98,6 +98,9 @@ const AddPets = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Paws Nest | addPets</title>
+      </Helmet>
       <div className="p-6 ">
         <h1 className="text-4xl text-[#005A55] text-center font-poppins font-semibold my-4">
           Add Pets
@@ -194,12 +197,12 @@ const AddPets = () => {
                   options={options}
                 /> */}
                 <select {...register("category")}>
-        <option value="carts">Carts</option>
-        <option value="rabbits">Rabbits</option>
-        <option value="dogs">Dogs</option>
-        <option value="fish">Fish</option>
-        <option value="birds">Birds</option>
-      </select>
+                  <option value="carts">Carts</option>
+                  <option value="rabbits">Rabbits</option>
+                  <option value="dogs">Dogs</option>
+                  <option value="fish">Fish</option>
+                  <option value="birds">Birds</option>
+                </select>
               </label>
               {/* pet location  */}
               <label className="form-control w-full ">

@@ -4,6 +4,8 @@ import useAuth from "../../hooks/useAuth";
 import Pets from "./Petscategory/Pets";
 import PetsCategory from "./Petscategory/PetsCategory";
 import Banners from "./banner/Banner";
+import CallSection from "./Call_Section/CallSection";
+import About from "./About/About";
 
 const Home = () => {
  
@@ -17,6 +19,8 @@ const Home = () => {
          <PetsCategory/>
          {/* pet collection  */}
          <Pets/>
+         <CallSection/>
+         <About/>
         </div>
     );
 };

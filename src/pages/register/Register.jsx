@@ -49,7 +49,7 @@ const Register = () => {
   })
     navigate("/");
       toast.success("Registration successfully");
-      logOut()
+      
 
     } catch (err) {
       console.log(err);

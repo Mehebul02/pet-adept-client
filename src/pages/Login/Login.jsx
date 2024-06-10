@@ -6,8 +6,11 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
 const Login = () => {
   const navigate = useNavigate()
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -65,19 +68,29 @@ const Login = () => {
                 )}
               </div>
               {/* password  */}
-              <div className="form-control">
-                <label className="label">
+              <div className="form-control relative">
+                <label className="label ">
                   <span className="label-text text-black font-poppins font-semibold">
                     Password
                   </span>
                 </label>
                 <input
                   {...register("password", { required: true })}
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   placeholder="Enter Password"
                   className="input input-bordered"
                   required
                 />
+                 <span
+                className="absolute right-6 top-14"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <FaEyeSlash className="text-xl"></FaEyeSlash>
+                ) : (
+                  <FaEye className="text-xl"></FaEye>
+                )}
+              </span>
                 {errors.password && (
                   <span className=" text-red-700 font-semibold ">
                     Password is required

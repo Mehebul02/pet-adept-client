@@ -107,7 +107,7 @@ const handleMakeAdmin = user =>{
                       </td>
                       <td className="px-4 py-4 text-md whitespace-nowrap">
                  
-                     {user.role === 'admin' ? 'Admin': <button onClick={()=>handleMakeAdmin(user)}><BiSolidUserCheck className="text-4xl "/></button>}
+                     {user.role === 'admin' ? 'Admin': <button onClick={()=>handleMakeAdmin(user)}><BiSolidUserCheck className="text-4xl text-[#005A55]"/></button>}
                       </td>
                       
                    

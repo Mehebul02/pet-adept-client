@@ -21,6 +21,7 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllPets from "../pages/Dashboard/AllPets/AllPets";
 import AllDonation from "../pages/Dashboard/AllDonation/AllDonation";
 import AdminRoutes from "./AdminRoutes";
+import Profile from "../pages/Dashboard/Profile/Profile";
 // import AdminRoutes from "./AdminRoutes";
 
 const router = createBrowserRouter([
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
         path:'adoption-Request',
         element:<AdoptionRequest/>
       },
+      {
+path:'profile',
+element:<Profile/>
+      },
       // admin section 
       {
         path:'allUser',
@@ -103,7 +108,7 @@ const router = createBrowserRouter([
       {
         path:'all-donations',
         element:<AdminRoutes><AllDonation/></AdminRoutes>
-      }
+      },
     ],
   },
 ]);
