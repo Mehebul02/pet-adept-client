@@ -1,16 +1,7 @@
-<!-- # React + Vite
+# Pet Adeption
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Live-Site](https://pet-adoption-ed896.web.app/)
 
-Currently, two official plugins are available:
+[Client-Repository](https://github.com/Mehebul02/pet-adept-client)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh -->
-# WebSite Name:Pews Nest
-https://pet-adoption-ed896.web.app/
-* Case Study
- # Packages Name
- * tanstack query
- * Flowbite
- * React-loading-skeleaton
- *  React-Quill
+[Server-Repository](https://github.com/Mehebul02/pet-adept-server)
